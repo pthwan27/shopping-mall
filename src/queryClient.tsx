@@ -6,6 +6,8 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 
+import { AxiosRequestConfig } from "axios";
+import ItemAxiosInstance from "./http";
 // import { getTodos, postTodo } from "../my-api";
 type AnyOBJ = { [key: string]: any };
 // Create a client
@@ -19,7 +21,6 @@ export const getClient = (() => {
   };
 })();
 
-const BASE_URL = "https://fakestoreapi.com";
 export const fetcher = async ({
   method,
   path,
@@ -32,18 +33,15 @@ export const fetcher = async ({
   params?: AnyOBJ;
 }) => {
   try {
-    const url: RequestInfo | URL = `${BASE_URL}${path}`;
-    const fetchOptions: RequestInit = {
+    const url: string = path;
+    const axiosOptions: AxiosRequestConfig = {
       method,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": BASE_URL,
-      },
+      params,
+      data: body,
     };
 
-    const res = await fetch(url, fetchOptions);
-    const json = await res.json();
-    return json;
+    const res = await ItemAxiosInstance(url, axiosOptions);
+    return res.data;
   } catch (err) {
     console.log(err);
   }

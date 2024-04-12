@@ -8,14 +8,24 @@ import {
 
 import { AxiosRequestConfig } from "axios";
 import ItemAxiosInstance from "./http";
-// import { getTodos, postTodo } from "../my-api";
-type AnyOBJ = { [key: string]: any };
-// Create a client
+import { AnyOBJ } from "./types";
+
 export const getClient = (() => {
   let client: QueryClient | null = null;
 
   return () => {
-    if (!client) client = new QueryClient();
+    if (!client)
+      client = new QueryClient({
+        defaultOptions: {
+          queries: {
+            gcTime: 1000 * 60 * 60 * 24,
+            staleTime: 1000 * 60,
+            refetchOnMount: false,
+            refetchOnReconnect: false,
+            refetchOnWindowFocus: false,
+          },
+        },
+      });
 
     return client;
   };
@@ -36,9 +46,16 @@ export const fetcher = async ({
     const url: string = path;
     const axiosOptions: AxiosRequestConfig = {
       method,
-      params,
-      data: body,
     };
+
+    if (params) {
+      const searchParams = new URLSearchParams(params);
+      path += "?" + searchParams.toString();
+    }
+
+    if (body) {
+      axiosOptions.data = body;
+    }
 
     const res = await ItemAxiosInstance(url, axiosOptions);
     return res.data;

@@ -1,3 +1,5 @@
+export type AnyOBJ = { [key: string]: any };
+
 export type Rating = {
   rate: number;
   count: number;

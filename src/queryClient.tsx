@@ -1,14 +1,10 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
+import request, { RequestDocument } from "graphql-request";
 
 import { AxiosRequestConfig } from "axios";
 import ItemAxiosInstance from "./http";
-import { AnyOBJ } from "./types";
+
+type AnyOBJ = { [key: string]: any };
 
 export const getClient = (() => {
   let client: QueryClient | null = null;
@@ -31,7 +27,7 @@ export const getClient = (() => {
   };
 })();
 
-export const fetcher = async ({
+export const restfetcher = async ({
   method,
   path,
   body,
@@ -63,6 +59,10 @@ export const fetcher = async ({
     console.log(err);
   }
 };
+const BASE_URL = "/";
+
+export const graphqlFetcher = <T,>(query: RequestDocument, variables = {}) =>
+  request<T>(BASE_URL, query, variables);
 
 export const QueryKey = {
   PRODUCTS: "PRODUCTS",

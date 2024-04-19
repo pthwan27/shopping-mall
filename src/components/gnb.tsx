@@ -10,7 +10,7 @@ const Gnb = () => (
         <Link to="/products">상품목록</Link>
       </li>
       <li>
-        <Link to="/carts">장바구니</Link>
+        <Link to="/cart">장바구니</Link>
       </li>
     </ul>
   </nav>

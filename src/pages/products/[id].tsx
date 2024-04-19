@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { QueryKey, graphqlFetcher } from "../../queryClient";
 import ProductDetail from "../../components/product/detail";
-import Product from "../../graphqlTypes";
+import { Product } from "../../graphqlTypes";
 import { GET_PRODUCT } from "../../graphql/products";
 
 const ProductDetailPage = () => {
@@ -18,7 +18,7 @@ const ProductDetailPage = () => {
   return (
     <div>
       <h2>상품 상세</h2>
-      <ProductDetail {...data} />;
+      <ProductDetail {...data} />
     </div>
   );
 };

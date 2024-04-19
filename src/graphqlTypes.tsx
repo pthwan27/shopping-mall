@@ -1,4 +1,4 @@
-type Product = {
+export type Product = {
   id: string;
   imageURL: string;
   title: string;
@@ -6,8 +6,15 @@ type Product = {
   description: string;
   createdAt: string;
 };
+
 export type Products = {
   products: Product[];
 };
 
-export default Product;
+export type CartType = {
+  id: string;
+  imageURL: string;
+  title: string;
+  price: number;
+  amount: number;
+};

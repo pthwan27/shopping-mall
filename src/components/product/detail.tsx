@@ -1,4 +1,4 @@
-import Product from "../../graphqlTypes";
+import { Product } from "../../graphqlTypes";
 
 const ProductDetail = ({ title, price, description, imageURL }: Product) => (
   <div className="product-detail">

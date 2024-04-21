@@ -1,0 +1,22 @@
+.cart {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 10px;
+  list-style: none;
+}
+
+.cart-item {
+  border: 1px solid #000;
+  padding: 10px;
+
+  &__image {
+    width: 180px;
+    height: 100px;
+    object-fit: contain;
+  }
+  &__price {
+  }
+  &__amount {
+  }
+}

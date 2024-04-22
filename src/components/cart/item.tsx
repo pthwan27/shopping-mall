@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { CartType } from "../../graphqlTypes";
 import { QueryKey, getClient, graphqlFetcher } from "../../queryClient";
 import { DELETE_CART, UPDATE_CART } from "../../graphql/cart";
-import { ForwardedRef, RefObject, SyntheticEvent, forwardRef } from "react";
+import { ForwardedRef, SyntheticEvent, forwardRef } from "react";
 const CartItem = (
   { id, imageURL, title, price, amount }: CartType,
   ref: ForwardedRef<HTMLInputElement>

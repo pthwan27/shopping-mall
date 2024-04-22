@@ -1,9 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import { CartType } from "../../graphqlTypes";
 import { QueryKey, getClient, graphqlFetcher } from "../../queryClient";
-import { UPDATE_CART } from "../../graphql/cart";
-import { SyntheticEvent } from "react";
-const CartItem = ({ id, imageURL, title, price, amount }: CartType) => {
+import { DELETE_CART, UPDATE_CART } from "../../graphql/cart";
+import { ForwardedRef, RefObject, SyntheticEvent, forwardRef } from "react";
+const CartItem = (
+  { id, imageURL, title, price, amount }: CartType,
+  ref: ForwardedRef<HTMLInputElement>
+) => {
   const queryClient = getClient();
   const { mutate: updateCart } = useMutation({
     mutationFn: ({ id, amount }: { id: string; amount: number }) => {
@@ -34,13 +37,40 @@ const CartItem = ({ id, imageURL, title, price, amount }: CartType) => {
     },
   });
 
+  const { mutate: deleteCart } = useMutation({
+    mutationFn: ({ id }: { id: string }): Promise<string> => {
+      return graphqlFetcher(DELETE_CART, { id });
+    },
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: [QueryKey.CART] });
+      const prevCart = queryClient.getQueryData<{ [key: string]: CartType }>([QueryKey.CART]);
+
+      const newCart = {
+        ...(prevCart || {}),
+      };
+      queryClient.setQueryData([QueryKey.CART], newCart);
+    },
+    onSuccess: (id: string) => {
+      const prevCart = queryClient.getQueryData<{ [key: string]: CartType }>([QueryKey.CART]);
+
+      const { [id]: deletedItem, ...newCart } = prevCart || {};
+
+      queryClient.setQueryData([QueryKey.CART], newCart);
+    },
+  });
+
   const handleUpdateAmount = (e: SyntheticEvent) => {
     const amount = Number((e.target as HTMLInputElement).value);
+    if (amount < 1) return;
     updateCart({ id, amount });
+  };
+
+  const handleDeleteItem = () => {
+    deleteCart({ id });
   };
   return (
     <li className="cart-item">
-      <input className="cart-item__checkbox" type="checkbox" />
+      <input className="cart-item__checkbox" type="checkbox" name="select-item" ref={ref} />
       <img className="cart-item__image" src={imageURL}></img>
       <p className="cart-item__title">{title}</p>
       <p className="cart-item__price">${price}</p>
@@ -49,12 +79,13 @@ const CartItem = ({ id, imageURL, title, price, amount }: CartType) => {
         className="cart-item__amount"
         value={amount}
         onChange={handleUpdateAmount}
+        min={1}
       ></input>
-      <button className="cart-item__button" type="button">
+      <button className="cart-item__button" type="button" onClick={handleDeleteItem}>
         삭제
       </button>
     </li>
   );
 };
 
-export default CartItem;
+export default forwardRef(CartItem);

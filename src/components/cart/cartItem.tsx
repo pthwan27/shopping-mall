@@ -71,7 +71,13 @@ const CartItem = (
   };
   return (
     <li className="cart-item">
-      <input className="cart-item__checkbox" type="checkbox" name="select-item" ref={ref} />
+      <input
+        className="cart-item__checkbox"
+        type="checkbox"
+        name="select-item"
+        ref={ref}
+        data-id={id}
+      />
       <ItemData imageURL={imageURL} price={price} title={title} />
       <input
         type="number"

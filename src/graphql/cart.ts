@@ -39,4 +39,5 @@ export const DELETE_CART = gql`
     id
   }
 `;
+
 export default GET_CART;

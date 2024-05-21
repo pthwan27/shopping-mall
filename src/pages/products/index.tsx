@@ -1,24 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 import { QueryKey, graphqlFetcher } from "../../queryClient";
-import ProductItem from "../../components/product/item";
 import GET_PRODUCTS from "../../graphql/products";
 import { Products } from "../../graphqlTypes";
+import ProductList from "../../components/product/productList";
 
-const ProductList = () => {
+const ProductListPage = () => {
   const { data } = useQuery<Products>({
     queryKey: [QueryKey.PRODUCTS],
     queryFn: () => graphqlFetcher(GET_PRODUCTS),
   });
 
+  if (!data || !data.products) {
+    return <div>데이터가 없습니다</div>;
+  }
+
   return (
     <div>
       <h2>상품 목록</h2>
-      <ul className="products">
-        {data?.products?.map((product) => (
-          <ProductItem {...product} key={product.id} />
-        ))}
-      </ul>
+      <ProductList list={data} />
     </div>
   );
 };
-export default ProductList;
+export default ProductListPage;

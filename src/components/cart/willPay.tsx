@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
 import { checkedCartState } from "../../recoil/cart";
-import ItemData from "./itemData";
-import { Link, useNavigate } from "react-router-dom";
+import ItemData from "./cartItemData";
+import { useNavigate } from "react-router-dom";
 
 const willPay = () => {
   const checkedItems = useRecoilValue(checkedCartState);
@@ -12,7 +12,7 @@ const willPay = () => {
     return prev;
   }, 0);
   const goToPayment = () => {
-    if (checkedItems.length) navigate("/payment");
+    if (checkedItems.length) navigate("/payment", { state: { totalPrice: totalPrice } });
   };
 
   return (
@@ -29,7 +29,7 @@ const willPay = () => {
         </ul>
       </div>
       <div className="cart-willpay-total">총액 : ${totalPrice}</div>
-      <button onClick={goToPayment}>결제하기</button>
+      <button onClick={goToPayment}>결제 페이지로</button>
     </>
   );
 };

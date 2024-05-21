@@ -47,6 +47,7 @@ export const handlers = [
     newCartData[id] = newItem;
 
     cartData = newCartData;
+
     return res(ctx.data(newItem));
   }),
 

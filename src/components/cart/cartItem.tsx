@@ -3,7 +3,7 @@ import { CartType } from "../../graphqlTypes";
 import { QueryKey, getClient, graphqlFetcher } from "../../queryClient";
 import { DELETE_CART, UPDATE_CART } from "../../graphql/cart";
 import { ForwardedRef, SyntheticEvent, forwardRef } from "react";
-import ItemData from "./itemData";
+import ItemData from "./cartItemData";
 const CartItem = (
   { id, imageURL, title, price, amount }: CartType,
   ref: ForwardedRef<HTMLInputElement>

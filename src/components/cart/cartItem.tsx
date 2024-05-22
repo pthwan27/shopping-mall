@@ -4,6 +4,7 @@ import { QueryKey, getClient, graphqlFetcher } from "../../queryClient";
 import { DELETE_CART, UPDATE_CART } from "../../graphql/cart";
 import { ForwardedRef, SyntheticEvent, forwardRef } from "react";
 import ItemData from "./cartItemData";
+import React from "react";
 const CartItem = (
   { id, imageURL, title, price, amount }: CartType,
   ref: ForwardedRef<HTMLInputElement>
@@ -15,7 +16,9 @@ const CartItem = (
     },
     onMutate: async ({ id, amount }) => {
       await queryClient.cancelQueries({ queryKey: [QueryKey.CART] });
-      const prevCart = queryClient.getQueryData<{ [key: string]: CartType }>([QueryKey.CART]);
+      const prevCart = queryClient.getQueryData<{ [key: string]: CartType }>([
+        QueryKey.CART,
+      ]);
 
       if (!prevCart) return prevCart;
 
@@ -28,7 +31,9 @@ const CartItem = (
       return prevCart;
     },
     onSuccess: (newValue) => {
-      const prevCart = queryClient.getQueryData<{ [key: string]: CartType }>([QueryKey.CART]);
+      const prevCart = queryClient.getQueryData<{ [key: string]: CartType }>([
+        QueryKey.CART,
+      ]);
 
       const newCart = {
         ...(prevCart || {}),
@@ -44,7 +49,9 @@ const CartItem = (
     },
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: [QueryKey.CART] });
-      const prevCart = queryClient.getQueryData<{ [key: string]: CartType }>([QueryKey.CART]);
+      const prevCart = queryClient.getQueryData<{ [key: string]: CartType }>([
+        QueryKey.CART,
+      ]);
 
       const newCart = {
         ...(prevCart || {}),
@@ -52,7 +59,9 @@ const CartItem = (
       queryClient.setQueryData([QueryKey.CART], newCart);
     },
     onSuccess: (id: string) => {
-      const prevCart = queryClient.getQueryData<{ [key: string]: CartType }>([QueryKey.CART]);
+      const prevCart = queryClient.getQueryData<{ [key: string]: CartType }>([
+        QueryKey.CART,
+      ]);
 
       const { [id]: deletedItem, ...newCart } = prevCart || {};
 
@@ -86,7 +95,11 @@ const CartItem = (
         onChange={handleUpdateAmount}
         min={1}
       ></input>
-      <button className="cart-item__button" type="button" onClick={handleDeleteItem}>
+      <button
+        className="cart-item__button"
+        type="button"
+        onClick={handleDeleteItem}
+      >
         삭제
       </button>
     </li>

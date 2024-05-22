@@ -1,7 +1,8 @@
 import { graphql } from "msw";
 import GET_PRODUCTS, { GET_PRODUCT } from "../graphql/products";
 import GET_CART, { ADD_CART, DELETE_CART, UPDATE_CART } from "../graphql/cart";
-import { CartType } from "../graphqlTypes";
+import { CartType, PayItem } from "../graphqlTypes";
+import EXECUTE_PAY from "../graphql/payment";
 
 const mock_products = Array.from({ length: 20 }).map((_, idx) => ({
   id: idx + "",
@@ -13,6 +14,8 @@ const mock_products = Array.from({ length: 20 }).map((_, idx) => ({
 }));
 
 let cartData: { [key: string]: CartType } = (() => ({}))();
+
+let payData: { [key: string]: PayItem } = (() => ({}))();
 
 export const handlers = [
   graphql.query(GET_PRODUCTS, (req, res, ctx) => {
@@ -36,7 +39,9 @@ export const handlers = [
     const newCartData = { ...cartData };
     const id = req.variables.id;
 
-    const targetProduct = mock_products.find((item) => item.id === req.variables.id);
+    const targetProduct = mock_products.find(
+      (item) => item.id === req.variables.id
+    );
     if (!targetProduct) {
       throw new Error("상품이 없습니다");
     }
@@ -67,6 +72,8 @@ export const handlers = [
 
     cartData = newData;
 
+    console.log("mutation");
+
     return res(ctx.data(newItem));
   }),
   graphql.mutation(DELETE_CART, ({ variables: { id } }, res, ctx) => {
@@ -78,5 +85,17 @@ export const handlers = [
 
     cartData = newData;
     return res(ctx.data(id));
+  }),
+
+  graphql.mutation(EXECUTE_PAY, (req, res, ctx) => {
+    const { payInfos } = req.variables;
+    console.log(payInfos); // 디버깅 용도로 사용하려면 여기서 사용
+
+    return res(
+      ctx.data({
+        success: true,
+        message: "Payment executed successfully",
+      })
+    );
   }),
 ];

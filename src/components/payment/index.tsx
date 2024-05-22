@@ -4,11 +4,22 @@ import PaymentList from "./paymentList";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import PaymentModal from "./paymentModal";
+import { useMutation } from "@tanstack/react-query";
+import { PayItem } from "../../graphqlTypes";
+import { graphqlFetcher } from "../../queryClient";
+import EXECUTE_PAY from "../../graphql/payment";
 
 const payment = () => {
+  const { mutate: pay } = useMutation({
+    mutationFn: (info: PayItem[]) => {
+      return graphqlFetcher(EXECUTE_PAY, { info });
+    },
+  });
+
   const { state } = useLocation();
   const navigate = useNavigate();
-  const [checkedCartData, setCheckedCartData] = useRecoilState(checkedCartState);
+  const [checkedCartData, setCheckedCartData] =
+    useRecoilState(checkedCartState);
 
   const [modalShow, setModalToggle] = useState(false);
   const showModal = () => {
@@ -20,9 +31,10 @@ const payment = () => {
   };
 
   const purchase = () => {
-    //서버에서도 비워지게
+    pay(checkedCartData);
 
     setCheckedCartData([]);
+
     navigate("/cart", { replace: true });
   };
   const cancle = () => {

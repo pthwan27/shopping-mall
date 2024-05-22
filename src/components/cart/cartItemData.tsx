@@ -1,6 +1,10 @@
 import { CartType } from "../../graphqlTypes";
 
-const itemDate = ({ imageURL, title, price }: Pick<CartType, "imageURL" | "title" | "price">) => {
+const itemDate = ({
+  imageURL,
+  title,
+  price,
+}: Pick<CartType, "imageURL" | "title" | "price">) => {
   return (
     <>
       <img className="cart-item__image" src={imageURL}></img>

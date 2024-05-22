@@ -18,3 +18,8 @@ export type CartType = {
   price: number;
   amount: number;
 };
+
+export type PayItem = {
+  id: string;
+  amount: number;
+};

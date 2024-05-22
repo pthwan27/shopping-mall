@@ -11,7 +11,6 @@ const ProductDetailPage = () => {
     queryKey: [QueryKey.PRODUCTS, id],
     queryFn: () => graphqlFetcher(GET_PRODUCT, { id }),
   });
-  console.log(data);
 
   if (!data) return null;
 

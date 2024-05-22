@@ -39,9 +39,7 @@ export const handlers = [
     const newCartData = { ...cartData };
     const id = req.variables.id;
 
-    const targetProduct = mock_products.find(
-      (item) => item.id === req.variables.id
-    );
+    const targetProduct = mock_products.find((item) => item.id === req.variables.id);
     if (!targetProduct) {
       throw new Error("상품이 없습니다");
     }
@@ -71,8 +69,6 @@ export const handlers = [
     newData[id] = newItem;
 
     cartData = newData;
-
-    console.log("mutation");
 
     return res(ctx.data(newItem));
   }),

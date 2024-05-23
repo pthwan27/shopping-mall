@@ -18,8 +18,7 @@ const payment = () => {
 
   const { state } = useLocation();
   const navigate = useNavigate();
-  const [checkedCartData, setCheckedCartData] =
-    useRecoilState(checkedCartState);
+  const [checkedCartData, setCheckedCartData] = useRecoilState(checkedCartState);
 
   const [modalShow, setModalToggle] = useState(false);
   const showModal = () => {
@@ -31,11 +30,14 @@ const payment = () => {
   };
 
   const purchase = () => {
-    pay(checkedCartData);
+    const payInfos = checkedCartData.map(({ id, amount }) => {
+      return { id, amount };
+    });
+    pay(payInfos);
 
     setCheckedCartData([]);
 
-    navigate("/cart", { replace: true });
+    navigate("/products", { replace: true });
   };
   const cancle = () => {
     setModalToggle(false);

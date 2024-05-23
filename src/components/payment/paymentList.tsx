@@ -5,7 +5,7 @@ const paymentList = ({ paymentItems }: { paymentItems: CartType[] }) => (
   <div>
     <ul>
       {paymentItems.map((item: CartType) => (
-        <PaymentItem {...item} />
+        <PaymentItem {...item} key={item.id} />
       ))}
     </ul>
   </div>

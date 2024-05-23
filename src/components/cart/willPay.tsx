@@ -16,12 +16,12 @@ const willPay = () => {
   };
 
   return (
-    <>
+    <div>
       <div className="cart-willpay">
         <ul className="cart-willpay-item">
           {checkedItems.map(({ imageURL, price, amount, title, id }) => (
-            <li>
-              <ItemData imageURL={imageURL} price={price} title={title} key={id} />
+            <li key={id}>
+              <ItemData imageURL={imageURL} price={price} title={title} />
               <p>amout : ${amount}</p>
               <p>total : ${price * amount}</p>
             </li>
@@ -30,7 +30,7 @@ const willPay = () => {
       </div>
       <div className="cart-willpay-total">총액 : ${totalPrice}</div>
       <button onClick={goToPayment}>결제 페이지로</button>
-    </>
+    </div>
   );
 };
 

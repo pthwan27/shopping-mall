@@ -6,7 +6,7 @@ import EXECUTE_PAY from "../graphql/payment";
 
 const mock_products = Array.from({ length: 20 }).map((_, idx) => ({
   id: idx + "",
-  imageURL: `https://source.unsplash.com/200x150/?nature/${idx + 1}`,
+  imageURL: `https://picsum.photos/id/${idx + 10}/200/150`,
   price: 20000,
   title: `임시 ${idx + 1}번 상품`,
   description: `임시 ${idx + 1}번 상품 설명`,
@@ -14,8 +14,6 @@ const mock_products = Array.from({ length: 20 }).map((_, idx) => ({
 }));
 
 let cartData: { [key: string]: CartType } = (() => ({}))();
-
-let payData: { [key: string]: PayItem } = (() => ({}))();
 
 export const handlers = [
   graphql.query(GET_PRODUCTS, (req, res, ctx) => {
@@ -83,15 +81,12 @@ export const handlers = [
     return res(ctx.data(id));
   }),
 
-  graphql.mutation(EXECUTE_PAY, (req, res, ctx) => {
-    const { payInfos } = req.variables;
-    console.log(payInfos); // 디버깅 용도로 사용하려면 여기서 사용
+  graphql.mutation(EXECUTE_PAY, ({ variables: { info } }, res, ctx) => {
+    info.forEach(({ id }: { id: string }) => {
+      console.log(id);
+      delete cartData[id];
+    });
 
-    return res(
-      ctx.data({
-        success: true,
-        message: "Payment executed successfully",
-      })
-    );
+    return res(ctx.data(cartData));
   }),
 ];

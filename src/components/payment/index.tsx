@@ -33,7 +33,9 @@ const payment = () => {
     const payInfos = checkedCartData.map(({ id, amount }) => {
       return { id, amount };
     });
-    pay(payInfos);
+
+    console.log("payInfos");
+    console.log(pay(payInfos));
 
     setCheckedCartData([]);
 

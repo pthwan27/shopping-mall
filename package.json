@@ -1,45 +1,16 @@
 {
   "name": "shopping-mall",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/pthwan27/shopping-mall.git",
+  "author": "pthwan27 <parkssuu@gmail.com>",
+  "license": "MIT",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "nr": "yarn run dev"
-  },
-  "dependencies": {
-    "@tanstack/react-query": "^5.29.0",
-    "@tanstack/react-query-devtools": "^5.29.0",
-    "add": "^2.0.6",
-    "axios": "^1.6.8",
-    "graphql-request": "^6.1.0",
-    "graphql-tag": "^2.12.6",
-    "msw": "0.39",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.3",
-    "recoil": "^0.7.7",
-    "uuid": "^9.0.1",
-    "yarn": "^1.22.22"
-  },
-  "devDependencies": {
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
-    "@types/uuid": "^9.0.8",
-    "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "@vitejs/plugin-react": "^4.2.1",
-    "eslint": "^9.0.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.6",
-    "eslint-plugin-unused-imports": "^3.1.0",
-    "sass": "^1.74.1",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0"
-  },
-  "msw": {
-    "workerDirectory": "public"
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts" : {
+    "client" : "yarn workspace client dev"
   }
 }

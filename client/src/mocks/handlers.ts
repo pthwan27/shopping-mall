@@ -82,14 +82,18 @@ export const handlers = [
   }),
 
   graphql.mutation(EXECUTE_PAY, ({ variables: { info } }, res, ctx) => {
+    const newData = { ...cartData };
+
     info.forEach(({ id, amount }: { id: string; amount: number }) => {
       const item = cartData[id];
       if (item) {
         item.amount -= amount;
 
-        if (item.amount <= 0) delete cartData[id];
+        if (item.amount <= 0) delete newData[id];
       }
     });
+
+    cartData = newData;
 
     return res(ctx.data(cartData));
   }),

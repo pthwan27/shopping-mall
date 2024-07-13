@@ -34,8 +34,7 @@ const payment = () => {
       return { id, amount };
     });
 
-    console.log("payInfos");
-    console.log(pay(payInfos));
+    pay(payInfos);
 
     setCheckedCartData([]);
 

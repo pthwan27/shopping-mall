@@ -1,3 +1,5 @@
+import { Resolver } from "./types";
+
 const mock_products = Array.from({ length: 20 }).map((_, idx) => ({
   id: idx + "",
   imageURL: `https://picsum.photos/id/${idx + 10}/200/150`,
@@ -12,7 +14,7 @@ let cartData = [
   { id: "2", amount: 2 },
 ];
 
-const cartResolver = {
+const cartResolver: Resolver = {
   Query: {
     carts: (parent, args, context, info) => {
       return cartData;
@@ -62,15 +64,17 @@ const cartResolver = {
       cartData = newData;
       return id;
     },
-    executePay: (parent, { info }, context) => {
-      const newData = { ...cartData };
+    executePay: (parent, { info }) => {
+      let newData = { ...cartData };
 
       info.forEach(({ id, amount }: { id: string; amount: number }) => {
-        const item = cartData[id];
-        if (item) {
-          item.amount -= amount;
+        const targetCartItem = newData.find((item) => item.id === id);
+        if (targetCartItem) {
+          targetCartItem.amount -= amount;
 
-          if (item.amount <= 0) delete newData[id];
+          if (targetCartItem.amount <= 0) {
+            newData = newData.filter((item) => item.id !== id);
+          }
         }
       });
 

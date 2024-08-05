@@ -7,7 +7,7 @@ const productSchema = gql`
     title: String!
     price: Int!
     description: String
-    createdAt: Float
+    createdAt: String
   }
 
   type Query {

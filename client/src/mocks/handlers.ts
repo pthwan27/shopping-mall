@@ -1,7 +1,7 @@
 import { graphql } from "msw";
 import GET_PRODUCTS, { GET_PRODUCT } from "../graphql/products";
 import GET_CART, { ADD_CART, DELETE_CART, UPDATE_CART } from "../graphql/cart";
-import { CartType, PayItem } from "../graphqlTypes";
+import { Cart, PayItem } from "../graphqlTypes";
 import EXECUTE_PAY from "../graphql/payment";
 
 const mock_products = Array.from({ length: 20 }).map((_, idx) => ({
@@ -13,7 +13,7 @@ const mock_products = Array.from({ length: 20 }).map((_, idx) => ({
   createdAt: new Date(1713260035562 + idx * 1000 * 60 * 60 * 10).toString(),
 }));
 
-let cartData: { [key: string]: CartType } = (() => ({}))();
+let cartData: { [key: string]: Cart } = (() => ({}))();
 
 export const handlers = [
   graphql.query(GET_PRODUCTS, (req, res, ctx) => {
@@ -37,7 +37,9 @@ export const handlers = [
     const newCartData = { ...cartData };
     const id = req.variables.id;
 
-    const targetProduct = mock_products.find((item) => item.id === req.variables.id);
+    const targetProduct = mock_products.find(
+      (item) => item.id === req.variables.id
+    );
     if (!targetProduct) {
       throw new Error("상품이 없습니다");
     }

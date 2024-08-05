@@ -3,10 +3,8 @@ import { gql } from "apollo-server-express";
 const cartSchema = gql`
   type Cart {
     id: ID!
-    imageURL: String!
-    title: String!
-    price: Int!
     amount: Int!
+    product: Product
   }
 
   type Query {
@@ -15,7 +13,7 @@ const cartSchema = gql`
 
   type Mutation {
     addCart(id: ID!): Cart!
-    updateCart(id: ID!, amout: Int!): Cart!
+    updateCart(id: ID!, amount: Int!): Cart!
     deleteCart(id: ID!): ID!
     executePay(info: [PayInfo!]): [Cart!]
   }

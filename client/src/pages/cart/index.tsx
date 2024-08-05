@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import GET_CART from "../../graphql/cart";
-import { CartType } from "../../graphqlTypes";
+import { Cart } from "../../graphqlTypes";
 import { QueryKey, graphqlFetcher } from "../../queryClient";
 import CartList from "../../components/cart/cartList";
 
@@ -13,7 +13,7 @@ const cartPage = () => {
   });
   if (!data) return <div>장바구니가 비었어요</div>;
 
-  const cartItems = Object.values(data) as CartType[];
+  const cartItems = Object.values(data) as Cart[];
   if (!cartItems.length) return <div>장바구니가 비었어요</div>;
 
   return <CartList items={cartItems} />;

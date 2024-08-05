@@ -1,17 +1,18 @@
 import { SyntheticEvent, createRef, useEffect, useRef, useState } from "react";
-import { CartType } from "../../graphqlTypes";
+import { Cart } from "../../graphqlTypes";
 import CartItem from "./cartItem";
 import { useRecoilState } from "recoil";
 import { checkedCartState } from "../../recoil/cart";
 import WillPay from "./willPay";
 
-const cartList = ({ items }: { items: CartType[] }) => {
+const cartList = ({ items }: { items: Cart[] }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const checkboxRefs = items.map(() => createRef<HTMLInputElement>());
   const [formData, setFormData] = useState<FormData>();
 
   //recoil
-  const [checkedCartData, setCheckedCartData] = useRecoilState(checkedCartState);
+  const [checkedCartData, setCheckedCartData] =
+    useRecoilState(checkedCartState);
 
   const handleSelectAllChange = (target: HTMLInputElement) => {
     const allChecked = target.checked;
@@ -27,7 +28,8 @@ const cartList = ({ items }: { items: CartType[] }) => {
     const data = new FormData(formRef.current);
     const selectedCount = data.getAll("select-item").length;
     const allChecked = selectedCount === items.length;
-    const selectAllCheckbox = formRef.current.querySelector<HTMLInputElement>(".select-all");
+    const selectAllCheckbox =
+      formRef.current.querySelector<HTMLInputElement>(".select-all");
 
     if (selectAllCheckbox) selectAllCheckbox.checked = allChecked;
   };
@@ -64,7 +66,7 @@ const cartList = ({ items }: { items: CartType[] }) => {
   }, []);
 
   useEffect(() => {
-    const checkedItems = checkboxRefs.reduce<CartType[]>((res, ref, idx) => {
+    const checkedItems = checkboxRefs.reduce<Cart[]>((res, ref, idx) => {
       if (ref.current!?.checked) {
         res.push(items[idx]);
       }
@@ -83,7 +85,7 @@ const cartList = ({ items }: { items: CartType[] }) => {
           전체선택
         </label>
         <ul className="cart">
-          {items.map((item: CartType, i: number) => (
+          {items.map((item: Cart, i: number) => (
             <CartItem {...item} key={item.id} ref={checkboxRefs[i]} />
           ))}
         </ul>

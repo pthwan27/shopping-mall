@@ -1,12 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
-import { CartType } from "../../graphqlTypes";
+import { Cart } from "../../graphqlTypes";
 import { QueryKey, getClient, graphqlFetcher } from "../../queryClient";
 import { DELETE_CART, UPDATE_CART } from "../../graphql/cart";
 import { ForwardedRef, SyntheticEvent, forwardRef } from "react";
 import ItemData from "./cartItemData";
 
 const CartItem = (
-  { id, imageURL, title, price, amount }: CartType,
+  { id, imageURL, title, price, amount }: Cart,
   ref: ForwardedRef<HTMLInputElement>
 ) => {
   const queryClient = getClient();
@@ -16,7 +16,9 @@ const CartItem = (
     },
     onMutate: async ({ id, amount }) => {
       await queryClient.cancelQueries({ queryKey: [QueryKey.CART] });
-      const prevCart = queryClient.getQueryData<{ [key: string]: CartType }>([QueryKey.CART]);
+      const prevCart = queryClient.getQueryData<{ [key: string]: Cart }>([
+        QueryKey.CART,
+      ]);
 
       if (!prevCart) return prevCart;
 
@@ -29,7 +31,9 @@ const CartItem = (
       return prevCart;
     },
     onSuccess: (newValue) => {
-      const prevCart = queryClient.getQueryData<{ [key: string]: CartType }>([QueryKey.CART]);
+      const prevCart = queryClient.getQueryData<{ [key: string]: Cart }>([
+        QueryKey.CART,
+      ]);
 
       const newCart = {
         ...(prevCart || {}),
@@ -45,7 +49,9 @@ const CartItem = (
     },
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: [QueryKey.CART] });
-      const prevCart = queryClient.getQueryData<{ [key: string]: CartType }>([QueryKey.CART]);
+      const prevCart = queryClient.getQueryData<{ [key: string]: Cart }>([
+        QueryKey.CART,
+      ]);
 
       const newCart = {
         ...(prevCart || {}),
@@ -53,7 +59,9 @@ const CartItem = (
       queryClient.setQueryData([QueryKey.CART], newCart);
     },
     onSuccess: (id: string) => {
-      const prevCart = queryClient.getQueryData<{ [key: string]: CartType }>([QueryKey.CART]);
+      const prevCart = queryClient.getQueryData<{ [key: string]: Cart }>([
+        QueryKey.CART,
+      ]);
 
       const { [id]: deletedItem, ...newCart } = prevCart || {};
 
@@ -87,7 +95,11 @@ const CartItem = (
         onChange={handleUpdateAmount}
         min={1}
       ></input>
-      <button className="cart-item__button" type="button" onClick={handleDeleteItem}>
+      <button
+        className="cart-item__button"
+        type="button"
+        onClick={handleDeleteItem}
+      >
         삭제
       </button>
     </li>

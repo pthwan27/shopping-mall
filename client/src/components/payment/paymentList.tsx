@@ -1,10 +1,10 @@
-import { CartType } from "../../graphqlTypes";
+import { Cart } from "../../graphqlTypes";
 import PaymentItem from "./paymentItem";
 
-const paymentList = ({ paymentItems }: { paymentItems: CartType[] }) => (
+const paymentList = ({ paymentItems }: { paymentItems: Cart[] }) => (
   <div>
     <ul>
-      {paymentItems.map((item: CartType) => (
+      {paymentItems.map((item: Cart) => (
         <PaymentItem {...item} key={item.id} />
       ))}
     </ul>

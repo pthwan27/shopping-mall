@@ -1,21 +1,13 @@
-import { Resolver } from "./types";
-
-const mock_products = Array.from({ length: 20 }).map((_, idx) => ({
-  id: idx + "",
-  imageURL: `https://picsum.photos/id/${idx + 10}/200/150`,
-  price: 20000,
-  title: `임시 ${idx + 1}번 상품`,
-  description: `임시 ${idx + 1}번 상품 설명`,
-  createdAt: new Date(1713260035562 + idx * 1000 * 60 * 60 * 10).toString(),
-}));
+import { Product, Resolver } from "./types";
 
 const productResolver: Resolver = {
   Query: {
-    products: (parent, args, context, info) => {
-      return mock_products;
+    products: (_, __, { db }) => {
+      return db.products;
     },
-    product: (parent, { id }, context, info) => {
-      const found = mock_products.find((item) => item.id === id);
+    product: (_, { id }, { db }) => {
+      const found = db.products.find((item: Product) => item.id === id);
+
       if (found) return found;
 
       return null;

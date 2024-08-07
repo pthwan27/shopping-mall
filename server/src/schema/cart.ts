@@ -20,7 +20,7 @@ const cartSchema = gql`
 
   input PayInfo {
     id: ID!
-    amout: Int!
+    amount: Int!
   }
 `;
 

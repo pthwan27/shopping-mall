@@ -48,47 +48,50 @@ const cartResolver: CartResolver = {
       return newCartItem;
     },
     updateCart: (_, { id, amount }, { db }) => {
-      const newData = { ...db.cart };
+      if (!id) throw Error("장바구니에 추가할 상품이 존재하지 않습니다");
 
-      if (!newData[id]) {
-        throw new Error("없는 데이터입니다");
+      const updateCartItemIdx = db.cart.findIndex(
+        (item: Cart) => item.id === id
+      );
+
+      if (updateCartItemIdx < 0) {
+        throw new Error("장바구니에 상품이 없습니다");
       }
-      const newItem = {
-        ...newData[id],
-        amount,
-      };
 
-      newData[id] = newItem;
+      db.cart[updateCartItemIdx].amount = amount;
 
-      writeDB(DBField.CART, newData);
+      setCartData(db.cart);
 
-      return newItem;
+      return db.cart[updateCartItemIdx];
     },
     deleteCart: (_, { id }, { db }) => {
-      const newData = { ...db.cart };
-
       if (!id) throw new Error("삭제할 상품이 존재하지 않습니다");
 
-      delete newData[id];
+      const deleteCartItemIdx = db.cart.findIndex(
+        (item: Cart) => item.id === id
+      );
 
-      writeDB(DBField.CART, newData);
+      if (deleteCartItemIdx < 0) {
+        throw new Error("장바구니에 상품이 없습니다");
+      }
+      db.cart.splice(deleteCartItemIdx, 1);
+
+      setCartData(db.cart);
       return id;
     },
     executePay: (_, { info }, { db }) => {
-      let newData = { ...db.cart };
-
       info.forEach(({ id, amount }: { id: string; amount: number }) => {
-        const targetCartItem = newData.find((item: Cart) => item.id === id);
+        const targetCartItem = db.cart.find((item: Cart) => item.id === id);
         if (targetCartItem) {
           targetCartItem.amount -= amount;
 
           if (targetCartItem.amount <= 0) {
-            newData = newData.filter((item: Cart) => item.id !== id);
+            db.cart = db.cart.filter((item: Cart) => item.id !== id);
           }
         }
       });
 
-      writeDB(DBField.CART, newData);
+      setCartData(db.cart);
 
       return db.cart;
     },

@@ -38,7 +38,6 @@ const cartResolver: CartResolver = {
         newCartItem = {
           id,
           amount: 1,
-          product: targetProduct,
         };
         db.cart.push(newCartItem);
       }

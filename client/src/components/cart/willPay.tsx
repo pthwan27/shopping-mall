@@ -8,22 +8,23 @@ const willPay = () => {
   const navigate = useNavigate();
 
   const totalPrice = checkedItems.reduce((prev, cur) => {
-    prev += cur.amount * cur.price;
+    prev += cur.amount * cur.product.price;
     return prev;
   }, 0);
   const goToPayment = () => {
-    if (checkedItems.length) navigate("/payment", { state: { totalPrice: totalPrice } });
+    if (checkedItems.length)
+      navigate("/payment", { state: { totalPrice: totalPrice } });
   };
 
   return (
     <div>
       <div className="cart-willpay">
         <ul className="cart-willpay-item">
-          {checkedItems.map(({ imageURL, price, amount, title, id }) => (
+          {checkedItems.map(({ id, amount, product }) => (
             <li key={id}>
-              <ItemData imageURL={imageURL} price={price} title={title} />
+              <ItemData {...product} />
               <p>amout : ${amount}</p>
-              <p>total : ${price * amount}</p>
+              <p>total : ${product.price * amount}</p>
             </li>
           ))}
         </ul>

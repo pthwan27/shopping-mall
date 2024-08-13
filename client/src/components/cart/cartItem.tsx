@@ -6,7 +6,7 @@ import { ForwardedRef, SyntheticEvent, forwardRef } from "react";
 import ItemData from "./cartItemData";
 
 const CartItem = (
-  { id, imageURL, title, price, amount }: Cart,
+  { id, amount, product }: Cart,
   ref: ForwardedRef<HTMLInputElement>
 ) => {
   const queryClient = getClient();
@@ -87,7 +87,7 @@ const CartItem = (
         ref={ref}
         data-id={id}
       />
-      <ItemData imageURL={imageURL} price={price} title={title} />
+      <ItemData {...product} />
       <input
         type="number"
         className="cart-item__amount"

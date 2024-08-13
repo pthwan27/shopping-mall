@@ -13,13 +13,15 @@ export type Products = {
 
 export type Cart = {
   id: string;
-  imageURL: string;
-  title: string;
-  price: number;
   amount: number;
+  product: Product;
 };
 
-export type PayItem = {
+export type Carts = {
+  carts: Cart[];
+};
+
+export type PayInfo = {
   id: string;
   amount: number;
 };

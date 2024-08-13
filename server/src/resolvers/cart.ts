@@ -79,6 +79,8 @@ const cartResolver: CartResolver = {
       return id;
     },
     executePay: (_, { info }, { db }) => {
+      if (!info) throw new Error("결제할 상품이 존재하지 않습니다");
+
       info.forEach(({ id, amount }: { id: string; amount: number }) => {
         const targetCartItem = db.cart.find((item: Cart) => item.id === id);
         if (targetCartItem) {

@@ -2,22 +2,26 @@ import { gql } from "graphql-tag";
 
 const GET_PRODUCTS = gql`
   query GET_PRODUCTS {
-    id
-    imageURL
-    price
-    title
-    description
-    createdAt
+    products {
+      id
+      imageURL
+      price
+      title
+      description
+      createdAt
+    }
   }
 `;
 export const GET_PRODUCT = gql`
-  query GET_PRODUCT($id: string) {
-    id
-    imageURL
-    price
-    title
-    description
-    createdAt
+  query GET_PRODUCT($id: ID!) {
+    product(id: $id) {
+      id
+      imageURL
+      price
+      title
+      description
+      createdAt
+    }
   }
 `;
 export default GET_PRODUCTS;

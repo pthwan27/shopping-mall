@@ -1,9 +1,9 @@
 import { Cart } from "../../graphqlTypes";
 
-const paymentItem = ({ id, imageURL, title, price, amount }: Cart) => (
+const paymentItem = ({ id, amount, product }: Cart) => (
   <li>
-    <img src={imageURL}></img>
-    <p>{title}</p>
+    <img src={product.imageURL}></img>
+    <p>{product.title}</p>
     <p>{amount}</p>
   </li>
 );

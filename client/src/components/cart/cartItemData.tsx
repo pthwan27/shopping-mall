@@ -1,10 +1,6 @@
-import { Cart } from "../../graphqlTypes";
+import { Product } from "../../graphqlTypes";
 
-const itemDate = ({
-  imageURL,
-  title,
-  price,
-}: Pick<Cart, "imageURL" | "title" | "price">) => {
+const itemDate = ({ imageURL, title, price }: Product) => {
   return (
     <>
       <img className="cart-item__image" src={imageURL}></img>

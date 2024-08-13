@@ -59,7 +59,7 @@ export const restfetcher = async ({
     console.log(err);
   }
 };
-const BASE_URL = "/";
+const BASE_URL = "http://localhost:8000/graphql";
 
 export const graphqlFetcher = <T,>(query: RequestDocument, variables = {}) =>
   request<T>(BASE_URL, query, variables);

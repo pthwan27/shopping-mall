@@ -5,20 +5,21 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import PaymentModal from "./paymentModal";
 import { useMutation } from "@tanstack/react-query";
-import { PayItem } from "../../graphqlTypes";
+import { PayInfo } from "../../graphqlTypes";
 import { graphqlFetcher } from "../../queryClient";
 import EXECUTE_PAY from "../../graphql/payment";
 
 const payment = () => {
   const { mutate: pay } = useMutation({
-    mutationFn: (info: PayItem[]) => {
+    mutationFn: (info: PayInfo[]) => {
       return graphqlFetcher(EXECUTE_PAY, { info });
     },
   });
 
   const { state } = useLocation();
   const navigate = useNavigate();
-  const [checkedCartData, setCheckedCartData] = useRecoilState(checkedCartState);
+  const [checkedCartData, setCheckedCartData] =
+    useRecoilState(checkedCartState);
 
   const [modalShow, setModalToggle] = useState(false);
   const showModal = () => {
@@ -34,6 +35,8 @@ const payment = () => {
       return { id, amount };
     });
 
+    console.log("payInfos", [payInfos]);
+    console.log("payInfos", payInfos);
     pay(payInfos);
 
     setCheckedCartData([]);

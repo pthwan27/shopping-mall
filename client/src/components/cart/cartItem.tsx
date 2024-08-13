@@ -43,14 +43,11 @@ const CartItem = ({ id, amount, product }: Cart, ref: ForwardedRef<HTMLInputElem
       const newCart = {
         ...(prevCart || {}),
       };
+
       queryClient.setQueryData([QueryKey.CART], newCart);
     },
-    onSuccess: (id: string) => {
-      const prevCart = queryClient.getQueryData<{ [key: string]: Cart }>([QueryKey.CART]);
-
-      const { [id]: deletedItem, ...newCart } = prevCart || {};
-
-      queryClient.setQueryData([QueryKey.CART], newCart);
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QueryKey.CART] });
     },
   });
 

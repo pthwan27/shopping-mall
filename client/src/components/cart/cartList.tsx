@@ -1,24 +1,30 @@
-import { SyntheticEvent, createRef, useEffect, useRef, useState } from "react";
+import { SyntheticEvent, useEffect, useRef, useState } from "react";
 import { Cart } from "../../graphqlTypes";
 import CartItem from "./cartItem";
 import { useRecoilState } from "recoil";
 import { checkedCartState } from "../../recoil/cart";
 import WillPay from "./willPay";
 
-const cartList = ({ items }: { items: Cart[] }) => {
+const CartList = ({ items }: { items: Cart[] }) => {
   const formRef = useRef<HTMLFormElement>(null);
-  const checkboxRefs = items.map(() => createRef<HTMLInputElement>());
+  const checkboxRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [formData, setFormData] = useState<FormData>();
 
-  //recoil
+  // Recoil
   const [checkedCartData, setCheckedCartData] =
     useRecoilState(checkedCartState);
+
+  useEffect(() => {
+    checkboxRefs.current = items.map(() => null);
+  }, [items]);
 
   const handleSelectAllChange = (target: HTMLInputElement) => {
     const allChecked = target.checked;
 
-    checkboxRefs.forEach((item) => {
-      item.current!.checked = allChecked;
+    checkboxRefs.current.forEach((item) => {
+      if (item) {
+        item.checked = allChecked;
+      }
     });
   };
 
@@ -37,14 +43,11 @@ const cartList = ({ items }: { items: Cart[] }) => {
   const handleCheckboxChanged = (e?: SyntheticEvent) => {
     if (!formRef.current) return;
 
-    //form 안에서 무엇을 눌렀는지
     const targetInput = e?.target as HTMLInputElement;
 
     if (targetInput && targetInput.name.includes("select-all")) {
-      //전체선택 버튼이라면
       handleSelectAllChange(targetInput);
     } else {
-      //선택된게 상품 갯수랑 같으면 전체 선택 체크 상태로
       updateAllItemsCheckedState();
     }
 
@@ -54,25 +57,27 @@ const cartList = ({ items }: { items: Cart[] }) => {
 
   useEffect(() => {
     checkedCartData.forEach((item) => {
-      const itemRef = checkboxRefs.find((ref) => {
-        return ref.current!.dataset.id === item.id;
-      });
+      const itemRef = checkboxRefs.current.find(
+        (ref) => ref?.dataset.id === item.id
+      );
 
       if (itemRef) {
-        itemRef.current!.checked = true;
+        itemRef.checked = true;
       }
     });
     updateAllItemsCheckedState();
-  }, []);
+  }, [checkedCartData]);
 
   useEffect(() => {
-    const checkedItems = checkboxRefs.reduce<Cart[]>((res, ref, idx) => {
-      if (ref.current!?.checked) {
-        res.push(items[idx]);
-      }
-
-      return res;
-    }, []);
+    const checkedItems = checkboxRefs.current.reduce<Cart[]>(
+      (res, ref, idx) => {
+        if (ref?.checked) {
+          res.push(items[idx]);
+        }
+        return res;
+      },
+      []
+    );
 
     setCheckedCartData(checkedItems);
   }, [items, formData]);
@@ -86,7 +91,11 @@ const cartList = ({ items }: { items: Cart[] }) => {
         </label>
         <ul className="cart">
           {items.map((item: Cart, i: number) => (
-            <CartItem {...item} key={item.id} ref={checkboxRefs[i]} />
+            <CartItem
+              {...item}
+              key={item.id}
+              ref={(el) => (checkboxRefs.current[i] = el)}
+            />
           ))}
         </ul>
       </form>
@@ -95,4 +104,4 @@ const cartList = ({ items }: { items: Cart[] }) => {
   );
 };
 
-export default cartList;
+export default CartList;

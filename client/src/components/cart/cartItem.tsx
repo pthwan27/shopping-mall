@@ -25,28 +25,39 @@ const CartItem = (
   const [checkedCartData, setCheckedCartData] =
     useRecoilState(checkedCartState);
 
-  const { mutate: updateCart } = useMutation({
+  const { mutate: updateCart } = useMutation<
+    { updateCart: Cart[] },
+    unknown,
+    { id: string; amount: number }
+  >({
     mutationFn: ({ id, amount }: { id: string; amount: number }) => {
       return graphqlFetcher(UPDATE_CART, { id, amount });
     },
     onMutate: async ({ id, amount }) => {
       await queryClient.cancelQueries({ queryKey: [QueryKey.CART] });
-      const prevCart = queryClient.getQueryData<{ [key: string]: Cart }>([
+      const prevCart = queryClient.getQueryData<{ carts: Cart[] }>([
         QueryKey.CART,
       ]);
 
-      if (!prevCart) return prevCart;
+      if (!prevCart) return;
 
-      const newCart = {
-        ...(prevCart || {}),
-        [id]: { ...prevCart[id], amount },
-      };
-      queryClient.setQueryData([QueryKey.CART], newCart);
+      const updateCartIdx = prevCart.carts.findIndex(
+        (item: Cart) => item.id == id
+      );
 
-      return prevCart;
+      if (updateCartIdx < 0) return prevCart;
+
+      const newCart = prevCart.carts.map((item) =>
+        item.id === id ? { ...item, amount } : item
+      );
+
+      queryClient.setQueryData([QueryKey.CART], { carts: newCart });
+
+      return { prevCart };
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QueryKey.CART] });
+    onSuccess: (data) => {
+      // 서버에서 반환된 데이터로 캐시를 업데이트합니다.
+      queryClient.setQueryData([QueryKey.CART], { carts: data.updateCart });
     },
   });
 

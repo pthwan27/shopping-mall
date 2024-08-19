@@ -28,13 +28,15 @@ const CartItem = (
   const { mutate: updateCart } = useMutation<
     { updateCart: Cart[] },
     unknown,
-    { id: string; amount: number }
+    { id: string; amount: number },
+    Cart[] | unknown
   >({
     mutationFn: ({ id, amount }: { id: string; amount: number }) => {
       return graphqlFetcher(UPDATE_CART, { id, amount });
     },
     onMutate: async ({ id, amount }) => {
       await queryClient.cancelQueries({ queryKey: [QueryKey.CART] });
+
       const prevCart = queryClient.getQueryData<{ carts: Cart[] }>([
         QueryKey.CART,
       ]);
@@ -53,32 +55,48 @@ const CartItem = (
 
       queryClient.setQueryData([QueryKey.CART], { carts: newCart });
 
-      return { prevCart };
+      return prevCart.carts;
     },
-    onSuccess: (data) => {
-      // 서버에서 반환된 데이터로 캐시를 업데이트합니다.
-      queryClient.setQueryData([QueryKey.CART], { carts: data.updateCart });
+    onError: (error, _, context) => {
+      console.log(error);
+
+      queryClient.setQueryData([QueryKey.CART], { carts: context });
     },
   });
 
-  const { mutate: deleteCart } = useMutation({
+  const { mutate: deleteCart } = useMutation<
+    string,
+    unknown,
+    { id: string },
+    Cart[] | unknown
+  >({
     mutationFn: ({ id }: { id: string }): Promise<string> => {
       return graphqlFetcher(DELETE_CART, { id });
     },
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: [QueryKey.CART] });
-      const prevCart = queryClient.getQueryData<{ [key: string]: Cart }>([
+      const prevCart = queryClient.getQueryData<{ carts: Cart[] }>([
         QueryKey.CART,
       ]);
 
-      const newCart = {
-        ...(prevCart || {}),
-      };
+      if (!prevCart) return;
 
-      queryClient.setQueryData([QueryKey.CART], newCart);
+      const deleteCartIdx = prevCart?.carts.findIndex((item) => item.id === id);
+
+      if (deleteCartIdx < 0) {
+        return prevCart;
+      }
+
+      const newCart = prevCart.carts.filter((item) => item.id !== id);
+
+      queryClient.setQueryData([QueryKey.CART], { carts: newCart });
+
+      return prevCart.carts;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QueryKey.CART] });
+    onError: (error, _, context) => {
+      console.log(error);
+
+      queryClient.setQueryData([QueryKey.CART], { carts: context });
     },
   });
 

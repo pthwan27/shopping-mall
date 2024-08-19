@@ -17,10 +17,6 @@ export type Cart = {
   product: Product;
 };
 
-export type Carts = {
-  carts: Cart[];
-};
-
 export type PayInfo = {
   id: string;
   amount: number;

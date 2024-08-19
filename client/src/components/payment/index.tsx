@@ -2,17 +2,47 @@ import { useRecoilState } from "recoil";
 import { checkedCartState } from "../../recoil/cart";
 import PaymentList from "./paymentList";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PaymentModal from "./paymentModal";
 import { useMutation } from "@tanstack/react-query";
-import { PayInfo } from "../../graphqlTypes";
-import { graphqlFetcher } from "../../queryClient";
+import { Cart, PayInfo } from "../../graphqlTypes";
+import { getClient, graphqlFetcher, QueryKey } from "../../queryClient";
 import EXECUTE_PAY from "../../graphql/payment";
 
 const payment = () => {
-  const { mutate: pay } = useMutation({
+  const queryClient = getClient();
+  useEffect(() => {
+    const cartData = queryClient.getQueryData([QueryKey.CART]);
+    console.log("cartData", cartData);
+
+    if (!cartData) {
+      // 카트 데이터가 없으면 빈 배열로 초기화
+      queryClient.setQueryData([QueryKey.CART], { carts: [] });
+    }
+  }, [queryClient]);
+
+  const { mutate: pay } = useMutation<
+    { executePay: PayInfo[] },
+    unknown,
+    PayInfo[]
+  >({
     mutationFn: (info: PayInfo[]) => {
       return graphqlFetcher(EXECUTE_PAY, { info });
+    },
+    onSuccess: ({ executePay }) => {
+      const prevCart = queryClient.getQueryData<{ carts: Cart[] }>([
+        QueryKey.CART,
+      ]);
+      console.log("prevCart", prevCart);
+
+      console.log("executePay", executePay);
+      queryClient.setQueryData([QueryKey.CART], (oldData) =>
+        oldData
+          ? {
+              ...oldData,
+            }
+          : oldData
+      );
     },
   });
 
@@ -35,8 +65,6 @@ const payment = () => {
       return { id, amount };
     });
 
-    console.log("payInfos", [payInfos]);
-    console.log("payInfos", payInfos);
     pay(payInfos);
 
     setCheckedCartData([]);

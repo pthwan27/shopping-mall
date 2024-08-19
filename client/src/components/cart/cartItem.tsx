@@ -70,7 +70,7 @@ const CartItem = (
     { id: string },
     Cart[] | unknown
   >({
-    mutationFn: ({ id }: { id: string }): Promise<string> => {
+    mutationFn: ({ id }: { id: string }) => {
       return graphqlFetcher(DELETE_CART, { id });
     },
     onMutate: async () => {

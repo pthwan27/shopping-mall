@@ -32,4 +32,5 @@ export type Product = {
 export type Cart = {
   id: string;
   amount: number;
+  product: Product;
 };

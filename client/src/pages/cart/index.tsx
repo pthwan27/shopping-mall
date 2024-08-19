@@ -11,10 +11,8 @@ const cartPage = () => {
     staleTime: 0,
     gcTime: 30000,
   });
-  if (!data || !data.carts || !data.carts.length)
-    return <div>장바구니가 비었어요</div>;
+  if (!data || !data.carts || !data.carts.length) return <div>장바구니가 비었어요</div>;
 
-  console.log(data);
   return <CartList items={data.carts} />;
 };
 

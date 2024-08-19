@@ -10,8 +10,7 @@ const cartResolver: CartResolver = {
     },
   },
   Cart: {
-    product: (parent, _, { db }) =>
-      db.products.find((item: Product) => item.id === parent.id),
+    product: (parent, _, { db }) => db.products.find((item: Product) => item.id === parent.id),
   },
   Mutation: {
     addCart: (_, { id }, { db }) => {
@@ -25,9 +24,7 @@ const cartResolver: CartResolver = {
       }
 
       // 이미 카트에 있는 물건이면 amount+1
-      const cartExistItemIdx = db.cart.findIndex(
-        (item: Product) => item.id === id
-      );
+      const cartExistItemIdx = db.cart.findIndex((item: Product) => item.id === id);
 
       let newCartItem: Cart;
 
@@ -38,6 +35,7 @@ const cartResolver: CartResolver = {
         newCartItem = {
           id,
           amount: 1,
+          product: targetProduct,
         };
         db.cart.push(newCartItem);
       }
@@ -49,9 +47,7 @@ const cartResolver: CartResolver = {
     updateCart: (_, { id, amount }, { db }) => {
       if (!id) throw Error("장바구니에 추가할 상품이 존재하지 않습니다");
 
-      const updateCartItemIdx = db.cart.findIndex(
-        (item: Cart) => item.id === id
-      );
+      const updateCartItemIdx = db.cart.findIndex((item: Cart) => item.id === id);
 
       if (updateCartItemIdx < 0) {
         throw new Error("장바구니에 상품이 없습니다");
@@ -66,9 +62,7 @@ const cartResolver: CartResolver = {
     deleteCart: (_, { id }, { db }) => {
       if (!id) throw new Error("삭제할 상품이 존재하지 않습니다");
 
-      const deleteCartItemIdx = db.cart.findIndex(
-        (item: Cart) => item.id === id
-      );
+      const deleteCartItemIdx = db.cart.findIndex((item: Cart) => item.id === id);
 
       if (deleteCartItemIdx < 0) {
         throw new Error("장바구니에 상품이 없습니다");
@@ -81,18 +75,23 @@ const cartResolver: CartResolver = {
     executePay: (_, { info }, { db }) => {
       if (!info) throw new Error("결제할 상품이 존재하지 않습니다");
 
-      let newCart = [...db.cart];
+      const infoMap = new Map<string, number>(
+        info.map(({ id, amount }: { id: string; amount: number }) => [id, amount])
+      );
 
-      info.forEach(({ id, amount }: { id: string; amount: number }) => {
-        const targetCartItem = db.cart.find((item: Cart) => item.id === id);
-        if (targetCartItem) {
-          targetCartItem.amount -= amount;
+      const newCart = db.cart.reduce((acc: Cart[], item: Cart) => {
+        const targetItemAmount = infoMap.get(item.id);
 
-          if (targetCartItem.amount <= 0) {
-            newCart = newCart.filter((item: Cart) => item.id !== id);
-          }
+        if (targetItemAmount && targetItemAmount > 0) {
+          item.amount -= targetItemAmount;
         }
-      });
+
+        if (item.amount > 0) {
+          acc.push(item);
+        }
+
+        return acc;
+      }, [] as Cart[]);
 
       setCartData(newCart);
 

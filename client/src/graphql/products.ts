@@ -1,8 +1,8 @@
 import { gql } from "graphql-tag";
 
 const GET_PRODUCTS = gql`
-  query GET_PRODUCTS {
-    products {
+  query GET_PRODUCTS($cursor: ID) {
+    products(cursor: $cursor) {
       id
       imageURL
       price

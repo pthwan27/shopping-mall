@@ -25,7 +25,7 @@ const ProductListPage = () => {
       return lastPage.products[lastPage.products.length - 1].id;
     },
 
-    initialPageParam: 0,
+    initialPageParam: "",
 
     select: (data) => ({
       ...data,

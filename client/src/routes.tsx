@@ -4,6 +4,7 @@ import ProductsIndex from "./pages/products/index";
 import ProductsId from "./pages/products/[id]";
 import PaymentIndex from "./pages/payment/index";
 import CartIndex from "./pages/cart/index";
+import AdminIndex from "./pages/admin/index";
 
 export const routes = [
   {
@@ -14,6 +15,7 @@ export const routes = [
       { path: "/cart", element: <CartIndex />, index: true },
       { path: "/payment", element: <PaymentIndex />, index: true },
       { path: "/products", element: <ProductsIndex />, index: true },
+      { path: "/admin", element: <AdminIndex />, index: true },
       { path: "/products/:id", element: <ProductsId /> },
     ],
   },

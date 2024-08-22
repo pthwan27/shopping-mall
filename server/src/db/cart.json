@@ -106,5 +106,16 @@
    "title": "임시 30번 상품",
    "createdAt": "Sun Apr 28 2024 20:33:55 GMT+0900 (대한민국 표준시)"
   }
+ },
+ {
+  "id": "0c0b929c-bc74-43d7-b2e2-fcc231c3e0b2",
+  "amount": 1,
+  "product": {
+   "id": "0c0b929c-bc74-43d7-b2e2-fcc231c3e0b2",
+   "imageURL": "https://picsum.photos/id/11/200/150",
+   "title": "newProduct1",
+   "price": 1000,
+   "createdAt": 1724230291939
+  }
  }
 ]

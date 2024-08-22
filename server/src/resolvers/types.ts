@@ -26,7 +26,7 @@ export type Product = {
   title: string;
   price: number;
   description: string;
-  createdAt: string;
+  createdAt?: string;
 };
 
 export type Cart = {

@@ -1,14 +1,20 @@
 import { Product, Resolver } from "./types";
 import { DBField, writeDB } from "../dbController";
 
-const setProductData = (data: Product | Product[]) => writeDB(DBField.PRODUCTS, data);
+const setProductData = (data: Product | Product[]) =>
+  writeDB(DBField.PRODUCTS, data);
 
 const productResolver: Resolver = {
   Query: {
-    products: (_, { cursor }, { db }) => {
-      const fromIdx = db.products.findIndex((product: Product) => product.id === cursor) + 1;
+    products: (_, { cursor, showDeleted = false }, { db }) => {
+      const filterDb = showDeleted
+        ? db.products
+        : db.products.filter((product: Product) => !!product.createdAt);
 
-      return db.products.slice(fromIdx, fromIdx + 15) || [];
+      const fromIdx =
+        filterDb.findIndex((product: Product) => product.id === cursor) + 1;
+
+      return filterDb.slice(fromIdx, fromIdx + 15) || [];
     },
     product: (_, { id }, { db }) => {
       const found = db.products.find((product: Product) => product.id === id);
@@ -20,15 +26,23 @@ const productResolver: Resolver = {
   },
   Mutation: {
     addProduct: (_, { info }, { db }) => {
-      if (!info) throw new Error("변경할 상품이 존재하지 않습니다.");
+      if (!info) throw new Error("추가할 상품이 존재하지 않습니다.");
+
+      const addProductExistIdx = db.products.findIndex(
+        (item: Product) => item.id === info.id
+      );
+      if (addProductExistIdx) throw Error("이미 추가된 상품입니다.");
+
       const newProduct = {
-        id: info.id,
-        imageURL: info.imageURL,
-        title: info.title,
-        price: info.price,
-        description: info.description ? info.description : `${info.title} 설명입니다`,
-        createdAt: Date.now(),
+        ...info,
+        imageURL: `https://picsum.photos/id/${db.products.length}/200/150`,
+        description: info.description
+          ? info.description
+          : `${info.title} 설명입니다`,
+        createdAt: new Date(),
       };
+
+      console.log(newProduct);
 
       db.products.push(newProduct);
 
@@ -39,7 +53,9 @@ const productResolver: Resolver = {
     updateProduct: (_, { info }, { db }) => {
       if (!info.id) throw new Error("변경할 상품이 존재하지 않습니다.");
 
-      const updateProductIdx = db.products.findIndex((item: Product) => item.id === info.id);
+      const updateProductIdx = db.products.findIndex(
+        (item: Product) => item.id === info.id
+      );
 
       if (updateProductIdx < 0) {
         throw Error("변경할 상품이 존재하지 않습니다.");
@@ -64,7 +80,9 @@ const productResolver: Resolver = {
     deleteProduct: (_, { id }, { db }) => {
       if (!id) throw new Error("변경할 상품이 존재하지 않습니다.");
 
-      const deleteProductIdx = db.products.findIndex((item: Product) => item.id === id);
+      const deleteProductIdx = db.products.findIndex(
+        (item: Product) => item.id === id
+      );
 
       if (deleteProductIdx < 0) {
         throw Error("변경할 상품이 존재하지 않습니다.");

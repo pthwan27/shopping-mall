@@ -37,7 +37,7 @@
  },
  {
   "id": "1",
-  "amount": 2,
+  "amount": 8,
   "product": {
    "id": "1",
    "description": "임시 2번 상품 설명",

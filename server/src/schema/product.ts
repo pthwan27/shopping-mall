@@ -11,7 +11,7 @@ const productSchema = gql`
   }
 
   type Query {
-    products(cursor: ID): [Product!]
+    products(cursor: ID, showDeleted: Boolean): [Product!]
     product(id: ID!): Product!
   }
 
@@ -22,7 +22,7 @@ const productSchema = gql`
   }
   input productInfo {
     id: ID!
-    imageURL: String!
+    imageURL: String
     title: String!
     price: Int!
     description: String

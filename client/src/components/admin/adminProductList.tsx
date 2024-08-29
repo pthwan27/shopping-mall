@@ -1,10 +1,10 @@
 import { Products } from "../../graphqlTypes";
-import ProductItem from "./productItem";
+import AdminProductItem from "./adminProductItem";
 
 const ProductList = ({ list }: { list: Products }) => (
   <ul className="products">
     {list.products.map((product) => (
-      <ProductItem {...product} key={product.id} />
+      <AdminProductItem {...product} key={product.id} />
     ))}
   </ul>
 );

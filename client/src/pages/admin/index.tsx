@@ -1,47 +1,44 @@
-import {
-  InfiniteData,
-  QueryKey,
-  useInfiniteQuery,
-} from "@tanstack/react-query";
+import { InfiniteData, QueryKey, useInfiniteQuery } from "@tanstack/react-query";
 import { QueryKey as QUERYKEY, graphqlFetcher } from "../../queryClient";
 import GET_PRODUCTS from "../../graphql/products";
 import { Product } from "../../graphqlTypes";
 import ProductList from "../../components/product/productList";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const QUERY_KEY = [QUERYKEY.PRODUCTS];
 
 const AdminPage = () => {
-  const { fetchNextPage, hasNextPage, isFetchingNextPage, data } =
-    useInfiniteQuery<
-      { products: Product[] },
-      Error,
-      InfiniteData<{ products: Product[] }>,
-      QueryKey
-    >({
-      queryKey: [QUERY_KEY, true],
-      queryFn: ({ pageParam }) => {
-        return graphqlFetcher(GET_PRODUCTS, {
-          cursor: pageParam,
-          showDeleted: true,
-        });
-      },
+  const navigate = useNavigate();
 
-      getNextPageParam: (lastPage) => {
-        if (lastPage.products.length === 0) return undefined;
+  const [isOpen, setIsOpen] = useState(false);
+  const { fetchNextPage, hasNextPage, isFetchingNextPage, data } = useInfiniteQuery<
+    { products: Product[] },
+    Error,
+    InfiniteData<{ products: Product[] }>,
+    QueryKey
+  >({
+    queryKey: [QUERY_KEY, false],
+    queryFn: ({ pageParam }) => {
+      return graphqlFetcher(GET_PRODUCTS, { cursor: pageParam, showDeleted: true });
+    },
 
-        return lastPage.products[lastPage.products.length - 1].id;
-      },
+    getNextPageParam: (lastPage) => {
+      if (lastPage.products.length === 0) return undefined;
 
-      initialPageParam: "",
+      return lastPage.products[lastPage.products.length - 1].id;
+    },
 
-      select: (data) => ({
-        ...data,
-        pages: data.pages.map((page) => ({
-          products: page.products,
-        })),
-      }),
-    });
+    initialPageParam: "",
+
+    select: (data) => ({
+      ...data,
+      pages: data.pages.map((page) => ({
+        products: page.products,
+      })),
+    }),
+  });
 
   //관찰 대상으로 만들고, observe
   const loadMoreRef = useInfiniteScroll({
@@ -54,9 +51,14 @@ const AdminPage = () => {
     return <div>데이터가 없습니다</div>;
   }
 
+  const createProduct = () => {};
+
   return (
     <div>
-      <h2>상품 목록</h2>
+      <div id="admin_header__div">
+        <h2>상품 목록</h2>
+        <button> 상품 등록 </button>
+      </div>
       {data.pages.map((page, index) => (
         <ProductList key={index} list={page} />
       ))}

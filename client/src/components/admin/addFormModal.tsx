@@ -1,6 +1,13 @@
-const AddForm = () => {
+const AddFormModal = ({ closeModal }: { closeModal: () => void }) => {
+  const onSubmit = (event: React.FormEvent) => {
+    console.log("submit");
+
+    event.preventDefault();
+
+    closeModal();
+  };
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <label>
         title :<input name="title" type="text" required></input>
       </label>
@@ -21,4 +28,4 @@ const AddForm = () => {
   );
 };
 
-export default AddForm;
+export default AddFormModal;

@@ -4,15 +4,16 @@ import GET_PRODUCTS from "../../graphql/products";
 import { Product } from "../../graphqlTypes";
 import ProductList from "../../components/product/productList";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import useModal from "../../hooks/useModal";
+import AddFormModal from "../../components/admin/addFormModal";
 
 const QUERY_KEY = [QUERYKEY.PRODUCTS];
 
 const AdminPage = () => {
-  const navigate = useNavigate();
+  const { openModal, closeModal } = useModal(() => {
+    return <AddFormModal closeModal={closeModal} />;
+  });
 
-  const [isOpen, setIsOpen] = useState(false);
   const { fetchNextPage, hasNextPage, isFetchingNextPage, data } = useInfiniteQuery<
     { products: Product[] },
     Error,
@@ -51,13 +52,11 @@ const AdminPage = () => {
     return <div>데이터가 없습니다</div>;
   }
 
-  const createProduct = () => {};
-
   return (
     <div>
       <div id="admin_header__div">
         <h2>상품 목록</h2>
-        <button> 상품 등록 </button>
+        <button onClick={openModal}> 상품 등록 </button>
       </div>
       {data.pages.map((page, index) => (
         <ProductList key={index} list={page} />

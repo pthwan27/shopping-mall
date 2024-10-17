@@ -1,8 +1,4 @@
-import {
-  InfiniteData,
-  QueryKey,
-  useInfiniteQuery,
-} from "@tanstack/react-query";
+import { InfiniteData, QueryKey, useInfiniteQuery } from "@tanstack/react-query";
 import { QueryKey as QUERYKEY, graphqlFetcher } from "../../queryClient";
 import GET_PRODUCTS from "../../graphql/products";
 import { Product } from "../../graphqlTypes";
@@ -12,33 +8,32 @@ import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 const QUERY_KEY = [QUERYKEY.PRODUCTS];
 
 const ProductListPage = () => {
-  const { fetchNextPage, hasNextPage, isFetchingNextPage, data } =
-    useInfiniteQuery<
-      { products: Product[] },
-      Error,
-      InfiniteData<{ products: Product[] }>,
-      QueryKey
-    >({
-      queryKey: [QUERY_KEY, true],
-      queryFn: ({ pageParam }) => {
-        return graphqlFetcher(GET_PRODUCTS, { cursor: pageParam });
-      },
+  const { fetchNextPage, hasNextPage, isFetchingNextPage, data } = useInfiniteQuery<
+    { products: Product[] },
+    Error,
+    InfiniteData<{ products: Product[] }>,
+    QueryKey
+  >({
+    queryKey: [QUERY_KEY, true],
+    queryFn: ({ pageParam }) => {
+      return graphqlFetcher(GET_PRODUCTS, { cursor: pageParam });
+    },
 
-      getNextPageParam: (lastPage) => {
-        if (lastPage.products.length === 0) return undefined;
+    getNextPageParam: (lastPage) => {
+      if (lastPage.products.length === 0) return undefined;
 
-        return lastPage.products[lastPage.products.length - 1].id;
-      },
+      return lastPage.products[lastPage.products.length - 1].id;
+    },
 
-      initialPageParam: "",
+    initialPageParam: "",
 
-      select: (data) => ({
-        ...data,
-        pages: data.pages.map((page) => ({
-          products: page.products,
-        })),
-      }),
-    });
+    select: (data) => ({
+      ...data,
+      pages: data.pages.map((page) => ({
+        products: page.products,
+      })),
+    }),
+  });
 
   //관찰 대상으로 만들고, observe
   const loadMoreRef = useInfiniteScroll({

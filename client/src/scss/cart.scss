@@ -7,13 +7,14 @@
 }
 
 .cart-item {
-  border: 1px solid #000;
-  padding: 10px;
+  padding: 10px 10px 10px 0px;
 
   &__image {
+    height: 180px;
     width: 180px;
-    height: 100px;
-    object-fit: contain;
+    object-fit: cover;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.4);
   }
   &__price {
   }

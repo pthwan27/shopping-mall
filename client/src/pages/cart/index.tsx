@@ -13,7 +13,12 @@ const cartPage = () => {
   });
   if (!data || !data.carts || !data.carts.length) return <div>장바구니가 비었어요</div>;
 
-  return <CartList items={data.carts} />;
+  return (
+    <div>
+      <h2>장바구니</h2>
+      <CartList items={data.carts} />;
+    </div>
+  );
 };
 
 export default cartPage;

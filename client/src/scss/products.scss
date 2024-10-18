@@ -1,12 +1,17 @@
 .products {
+  margin: 0 auto;
+  width: 1132px;
+
   padding: 0;
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
+  justify-items: center;
 }
 
 .product-item {
   padding: 10px 10px 10px 0px;
+  margin-bottom: 30px;
   a {
     display: block;
     width: 180px;

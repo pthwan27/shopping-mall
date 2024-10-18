@@ -47,8 +47,8 @@ const ProductListPage = () => {
   }
 
   return (
-    <div>
-      <h2>상품 목록</h2>
+    <div className="container">
+      <h2 className="page-title">상품 목록</h2>
       {data.pages.map((page, index) => (
         <ProductList key={index} list={page} />
       ))}

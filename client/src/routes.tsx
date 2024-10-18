@@ -12,10 +12,10 @@ export const routes = [
     element: <GlobalLayout />,
     children: [
       { path: "/", element: <Index />, index: true },
-      { path: "/cart", element: <CartIndex />, index: true },
-      { path: "/payment", element: <PaymentIndex />, index: true },
-      { path: "/products", element: <ProductsIndex />, index: true },
-      { path: "/admin", element: <AdminIndex />, index: true },
+      { path: "/cart", element: <CartIndex /> },
+      { path: "/payment", element: <PaymentIndex /> },
+      { path: "/products", element: <ProductsIndex /> },
+      { path: "/admin", element: <AdminIndex /> },
       { path: "/products/:id", element: <ProductsId /> },
     ],
   },
@@ -27,4 +27,5 @@ export const pages = [
   { route: "/payment" },
   { route: "/products" },
   { route: "/products/:id" },
+  { route: "/admin" },
 ];

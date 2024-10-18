@@ -1,14 +1,11 @@
 .cart {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
   gap: 10px;
   padding: 10px;
   list-style: none;
 }
 
 .cart-item {
-  padding: 10px 10px 10px 0px;
-
   &__image {
     height: 180px;
     width: 180px;

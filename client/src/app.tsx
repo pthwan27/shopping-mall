@@ -28,7 +28,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Gnb />
-      {element}
+      <div className="main-container">{element}</div>
       <ModalProvider />
       <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>

@@ -1,11 +1,23 @@
 @import "font.scss";
-@import "products.scss";
-@import "cart.scss";
-@import "payment.scss";
-@import "admin.scss";
+@import "./pages/home.scss";
+@import "./pages/products.scss";
+@import "./pages/cart.scss";
+@import "./pages/payment.scss";
+@import "./pages/admin.scss";
+
+@import "./component/gnb.scss";
+
+#root {
+  --black-color: #040404;
+
+  --gray-color: #343434;
+
+  --gray-bg-color: #e6e6e6;
+  --gray-bg-color-2: #f1f1f1;
+}
 
 body {
-  font-family: MangoDdobak-R;
+  font-family: "GmarketSansMedium";
   margin: 0;
 }
 ul {
@@ -26,7 +38,7 @@ div {
   padding: 0;
 }
 button {
-  font-family: MangoDdobak-B;
+  font-family: "GmarketSansBold";
 }
 
 a {
@@ -36,19 +48,6 @@ h2 {
   line-height: normal;
 }
 
-#root {
-}
-
-.gnb {
-  height: 80px;
-  ul {
-    padding: 0;
-    list-style: none;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-  }
-}
 .page-title {
   text-align: center;
 }

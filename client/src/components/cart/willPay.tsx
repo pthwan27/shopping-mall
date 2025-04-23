@@ -3,7 +3,7 @@ import { checkedCartState } from "../../recoil/cart";
 import ItemData from "./cartItemData";
 import { useNavigate } from "react-router-dom";
 
-const willPay = () => {
+const WillPay = () => {
   const checkedItems = useRecoilValue(checkedCartState);
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ const willPay = () => {
   };
 
   return (
-    <div>
+    <div className="cart-willpay-container">
       <div className="cart-willpay">
         <ul className="cart-willpay-item">
           {checkedItems.map(({ id, amount, product }) => (
@@ -35,4 +35,4 @@ const willPay = () => {
   );
 };
 
-export default willPay;
+export default WillPay;

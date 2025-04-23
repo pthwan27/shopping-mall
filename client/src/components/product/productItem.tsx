@@ -3,6 +3,7 @@ import { Cart, Product } from "../../graphqlTypes";
 import { useMutation } from "@tanstack/react-query";
 import { getClient, graphqlFetcher, QueryKey } from "../../queryClient";
 import { ADD_CART } from "../../graphql/cart";
+import SvgPlus from "../../assets/svg/Plus";
 
 const ProductItem = ({ id, title, price, imageURL }: Product) => {
   const queryClient = getClient();
@@ -16,11 +17,15 @@ const ProductItem = ({ id, title, price, imageURL }: Product) => {
         queryKey: [QueryKey.CART],
       });
 
-      const prevCart = queryClient.getQueryData<{ carts: Cart[] }>([QueryKey.CART]);
+      const prevCart = queryClient.getQueryData<{ carts: Cart[] }>([
+        QueryKey.CART,
+      ]);
 
       if (!prevCart) return;
 
-      const existingItemIdx = prevCart.carts.findIndex((item) => item.id === id);
+      const existingItemIdx = prevCart.carts.findIndex(
+        (item) => item.id === id
+      );
 
       let newCart;
 
@@ -65,11 +70,13 @@ const ProductItem = ({ id, title, price, imageURL }: Product) => {
       <Link to={`/products/${id}`}>
         <img className="product-item__image" src={imageURL}></img>
         <p className="product-item__title">{title}</p>
+        <div className="product-item__buttons">
+          <span>${price}</span>
+          <button onClick={() => addCart(id)}>
+            <SvgPlus width="8" height="8" />
+          </button>
+        </div>
       </Link>
-      <div className="product-item__buttons">
-        <span>${price}</span>
-        <button onClick={() => addCart(id)}>담기</button>
-      </div>
     </li>
   );
 };

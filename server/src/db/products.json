@@ -480,10 +480,43 @@
     "createdAt": "Sat May 11 2024 06:33:55 GMT+0900 (대한민국 표준시)"
   },
   {
-    "id": "0c0b929c-bc74-43d7-b2e2-fcc231c3e0b2",
-    "imageURL": "https://picsum.photos/id/11/200/150",
-    "title": "updateProduct2",
-    "price": 1500,
-    "description": "updateProduct1 설명입니다"
+    "id": "60",
+    "description": "임시 61번 상품 설명",
+    "imageURL": "https://picsum.photos/id/70/200/150",
+    "price": 27000,
+    "title": "임시 61번 상품",
+    "createdAt": "Sat May 11 2024 06:33:55 GMT+0900 (대한민국 표준시)"
+  },
+  {
+    "id": "61",
+    "description": "임시 62번 상품 설명",
+    "imageURL": "https://picsum.photos/id/71/200/150",
+    "price": 21000,
+    "title": "임시 62번 상품",
+    "createdAt": "Sat May 11 2024 06:33:55 GMT+0900 (대한민국 표준시)"
+  },
+  {
+    "id": "62",
+    "description": "임시 63번 상품 설명",
+    "imageURL": "https://picsum.photos/id/72/200/150",
+    "price": 23000,
+    "title": "임시 63번 상품",
+    "createdAt": "Sat May 11 2024 06:33:55 GMT+0900 (대한민국 표준시)"
+  },
+  {
+    "id": "63",
+    "description": "임시 64번 상품 설명",
+    "imageURL": "https://picsum.photos/id/73/200/150",
+    "price": 21000,
+    "title": "임시 64번 상품",
+    "createdAt": "Sat May 11 2024 06:33:55 GMT+0900 (대한민국 표준시)"
+  },
+  {
+    "id": "64",
+    "description": "임시 65번 상품 설명",
+    "imageURL": "https://picsum.photos/id/69/200/150",
+    "price": 52000,
+    "title": "임시 65번 상품",
+    "createdAt": "Sat May 11 2024 06:33:55 GMT+0900 (대한민국 표준시)"
   }
 ]

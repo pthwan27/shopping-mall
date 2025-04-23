@@ -11,12 +11,17 @@ const cartPage = () => {
     staleTime: 0,
     gcTime: 30000,
   });
-  if (!data || !data.carts || !data.carts.length) return <div>장바구니가 비었어요</div>;
+  if (!data || !data.carts || !data.carts.length)
+    return <div>장바구니가 비었어요</div>;
 
   return (
-    <div className="container">
-      <h2 className="page-title">장바구니</h2>
-      <CartList items={data.carts} />;
+    <div className="cart-page">
+      <div className="overview">
+        <h3 className="title">Cart</h3>
+        <div className="desc">This page shows temporary product lists.</div>
+        <div className="desc">It was created using React and Vite.</div>
+      </div>
+      <CartList items={data.carts} />
     </div>
   );
 };

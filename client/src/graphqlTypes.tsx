@@ -7,10 +7,6 @@ export type Product = {
   createdAt: string;
 };
 
-export type Products = {
-  products: Product[];
-};
-
 export type Cart = {
   id: string;
   amount: number;

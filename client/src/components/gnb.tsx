@@ -4,13 +4,13 @@ const Gnb = () => (
   <nav className="gnb">
     <ul>
       <li>
-        <Link to="/">홈</Link>
+        <Link to="/">HOME</Link>
       </li>
       <li>
-        <Link to="/products">상품</Link>
+        <Link to="/products">PRODUCT</Link>
       </li>
       <li>
-        <Link to="/cart">장바구니</Link>
+        <Link to="/cart">CART</Link>
       </li>
     </ul>
   </nav>

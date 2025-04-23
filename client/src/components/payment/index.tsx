@@ -9,7 +9,7 @@ import { Cart, PayInfo } from "../../graphqlTypes";
 import { getClient, graphqlFetcher, QueryKey } from "../../queryClient";
 import EXECUTE_PAY from "../../graphql/payment";
 
-const payment = () => {
+const Payment = () => {
   const queryClient = getClient();
   useEffect(() => {
     const cartData = queryClient.getQueryData([QueryKey.CART]);
@@ -20,19 +20,28 @@ const payment = () => {
     }
   }, [queryClient]);
 
-  const { mutate: pay } = useMutation<{ executePay: PayInfo[] }, unknown, PayInfo[]>({
+  const { mutate: pay } = useMutation<
+    { executePay: PayInfo[] },
+    unknown,
+    PayInfo[]
+  >({
     mutationFn: (info: PayInfo[]) => {
       return graphqlFetcher(EXECUTE_PAY, { info });
     },
     onMutate: async (info: PayInfo[]) => {
       await queryClient.cancelQueries({ queryKey: [QueryKey.CART] });
 
-      const prevCart = queryClient.getQueryData<{ carts: Cart[] }>([QueryKey.CART]);
+      const prevCart = queryClient.getQueryData<{ carts: Cart[] }>([
+        QueryKey.CART,
+      ]);
 
       if (!prevCart) return;
 
       const infoMap = new Map<string, number>(
-        info.map(({ id, amount }: { id: string; amount: number }) => [id, amount])
+        info.map(({ id, amount }: { id: string; amount: number }) => [
+          id,
+          amount,
+        ])
       );
 
       const newCart = prevCart.carts.reduce((acc: Cart[], item: Cart) => {
@@ -69,7 +78,8 @@ const payment = () => {
 
   const { state } = useLocation();
   const navigate = useNavigate();
-  const [checkedCartData, setCheckedCartData] = useRecoilState(checkedCartState);
+  const [checkedCartData, setCheckedCartData] =
+    useRecoilState(checkedCartState);
 
   const [modalShow, setModalToggle] = useState(false);
   const showModal = () => {
@@ -104,4 +114,4 @@ const payment = () => {
     </div>
   );
 };
-export default payment;
+export default Payment;

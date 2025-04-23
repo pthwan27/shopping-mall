@@ -1,0 +1,108 @@
+.product-page {
+  .overview {
+    margin: 2rem 0;
+
+    text-align: center;
+
+    .title {
+    }
+
+    .desc {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.products {
+  margin: 0 auto;
+
+  width: 86%;
+  max-width: 1132px;
+
+  gap: 10px;
+
+  padding: 10px;
+
+  list-style: none;
+  display: grid;
+
+  grid-template-columns: repeat(5, 1fr);
+  justify-items: center;
+  justify-content: center;
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media screen and (max-width: 480px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.product-item {
+  margin-bottom: 2rem;
+
+  &__image {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 0.25rem;
+
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+  &__title {
+    color: var(--black-color);
+
+    font-family: "GmarketSansMedium";
+    font-size: 0.9rem;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 180px;
+  }
+  &__buttons {
+    width: 180px;
+
+    margin-top: 0.25rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+      font-family: "GmarketSansLight";
+      font-size: 0.75rem;
+
+      color: var(--black-color);
+    }
+
+    button {
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background-color: transparent;
+
+      border: none;
+
+      transition: transform 0.4s ease-in-out;
+
+      svg {
+        fill: var(--gray-color);
+        stroke: var(--gray-color);
+
+        transition: fill 0.4s ease-in-out, stroke 0.4s ease-in-out;
+      }
+    }
+    button:hover {
+      transform: scale(1.05);
+      transform: rotate(90deg);
+
+      svg {
+        stroke: red;
+        fill: red;
+      }
+    }
+  }
+}

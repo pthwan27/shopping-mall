@@ -11,7 +11,8 @@ const CartList = ({ items }: { items: Cart[] }) => {
   const [formData, setFormData] = useState<FormData>();
 
   // Recoil
-  const [checkedCartData, setCheckedCartData] = useRecoilState(checkedCartState);
+  const [checkedCartData, setCheckedCartData] =
+    useRecoilState(checkedCartState);
 
   useEffect(() => {
     checkboxRefs.current = items.map(() => null);
@@ -33,7 +34,8 @@ const CartList = ({ items }: { items: Cart[] }) => {
     const data = new FormData(formRef.current);
     const selectedCount = data.getAll("select-item").length;
     const allChecked = selectedCount === items.length;
-    const selectAllCheckbox = formRef.current.querySelector<HTMLInputElement>(".select-all");
+    const selectAllCheckbox =
+      formRef.current.querySelector<HTMLInputElement>(".select-all");
 
     if (selectAllCheckbox) selectAllCheckbox.checked = allChecked;
   };
@@ -55,7 +57,9 @@ const CartList = ({ items }: { items: Cart[] }) => {
 
   useEffect(() => {
     checkedCartData.forEach((item) => {
-      const itemRef = checkboxRefs.current.find((ref) => ref?.dataset.id === item.id);
+      const itemRef = checkboxRefs.current.find(
+        (ref) => ref?.dataset.id === item.id
+      );
 
       if (itemRef) {
         itemRef.checked = true;
@@ -65,26 +69,37 @@ const CartList = ({ items }: { items: Cart[] }) => {
   }, [checkedCartData]);
 
   useEffect(() => {
-    const checkedItems = checkboxRefs.current.reduce<Cart[]>((res, ref, idx) => {
-      if (ref?.checked) {
-        res.push(items[idx]);
-      }
-      return res;
-    }, []);
+    const checkedItems = checkboxRefs.current.reduce<Cart[]>(
+      (res, ref, idx) => {
+        if (ref?.checked) {
+          res.push(items[idx]);
+        }
+        return res;
+      },
+      []
+    );
 
     setCheckedCartData(checkedItems);
   }, [items, formData]);
 
   return (
-    <div>
-      <form ref={formRef} onChange={handleCheckboxChanged}>
+    <div className="container">
+      <form
+        className="cart-item-container"
+        ref={formRef}
+        onChange={handleCheckboxChanged}
+      >
         <label>
           <input className="select-all" name="select-all" type="checkbox" />
           전체선택
         </label>
-        <ul className="cart">
+        <ul className="cart-item-list">
           {items.map((item: Cart, i: number) => (
-            <CartItem {...item} key={item.id} ref={(el) => (checkboxRefs.current[i] = el)} />
+            <CartItem
+              {...item}
+              key={item.id}
+              ref={(el) => (checkboxRefs.current[i] = el)}
+            />
           ))}
         </ul>
       </form>

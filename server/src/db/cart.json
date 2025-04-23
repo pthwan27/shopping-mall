@@ -1,31 +1,7 @@
 [
  {
-  "id": "3",
-  "amount": 2,
-  "product": {
-   "id": "3",
-   "description": "임시 4번 상품 설명",
-   "imageURL": "https://picsum.photos/id/13/200/150",
-   "price": 20000,
-   "title": "임시 4번 상품",
-   "createdAt": "Thu Apr 18 2024 00:33:55 GMT+0900 (대한민국 표준시)"
-  }
- },
- {
-  "id": "5",
-  "amount": 2,
-  "product": {
-   "id": "5",
-   "description": "임시 6번 상품 설명",
-   "imageURL": "https://picsum.photos/id/15/200/150",
-   "price": 20000,
-   "title": "임시 6번 상품",
-   "createdAt": "Thu Apr 18 2024 20:33:55 GMT+0900 (대한민국 표준시)"
-  }
- },
- {
   "id": "0",
-  "amount": 76,
+  "amount": 3,
   "product": {
    "id": "0",
    "description": "임시 1번 상품 설명",
@@ -37,85 +13,26 @@
  },
  {
   "id": "1",
-  "amount": 14,
+  "amount": 1,
   "product": {
    "id": "1",
    "description": "임시 2번 상품 설명",
    "imageURL": "https://picsum.photos/id/11/200/150",
-   "price": 20000,
+   "price": 25000,
    "title": "임시 2번 상품",
    "createdAt": "Wed Apr 17 2024 04:33:55 GMT+0900 (대한민국 표준시)"
   }
  },
  {
-  "id": "15",
-  "amount": 4,
-  "product": {
-   "id": "15",
-   "description": "임시 16번 상품 설명",
-   "imageURL": "https://picsum.photos/id/25/200/150",
-   "price": 25000,
-   "title": "임시 16번 상품",
-   "createdAt": "Tue Apr 23 2024 00:33:55 GMT+0900 (대한민국 표준시)"
-  }
- },
- {
-  "id": "47",
-  "amount": 2,
-  "product": {
-   "id": "47",
-   "description": "임시 48번 상품 설명",
-   "imageURL": "https://picsum.photos/id/57/200/150",
-   "price": 19000,
-   "title": "임시 48번 상품",
-   "createdAt": "Mon May 06 2024 06:33:55 GMT+0900 (대한민국 표준시)"
-  }
- },
- {
-  "id": "53",
-  "amount": 3,
-  "product": {
-   "id": "53",
-   "description": "임시 54번 상품 설명",
-   "imageURL": "https://picsum.photos/id/63/200/150",
-   "price": 17000,
-   "title": "임시 54번 상품",
-   "createdAt": "Wed May 08 2024 18:33:55 GMT+0900 (대한민국 표준시)"
-  }
- },
- {
-  "id": "2",
-  "amount": 10,
-  "product": {
-   "id": "2",
-   "description": "임시 3번 상품 설명",
-   "imageURL": "https://picsum.photos/id/12/200/150",
-   "price": 18000,
-   "title": "임시 3번 상품",
-   "createdAt": "Wed Apr 17 2024 14:33:55 GMT+0900 (대한민국 표준시)"
-  }
- },
- {
-  "id": "29",
-  "amount": 4,
-  "product": {
-   "id": "29",
-   "description": "임시 30번 상품 설명",
-   "imageURL": "https://picsum.photos/id/39/200/150",
-   "price": 19000,
-   "title": "임시 30번 상품",
-   "createdAt": "Sun Apr 28 2024 20:33:55 GMT+0900 (대한민국 표준시)"
-  }
- },
- {
-  "id": "0c0b929c-bc74-43d7-b2e2-fcc231c3e0b2",
+  "id": "30",
   "amount": 1,
   "product": {
-   "id": "0c0b929c-bc74-43d7-b2e2-fcc231c3e0b2",
-   "imageURL": "https://picsum.photos/id/11/200/150",
-   "title": "newProduct1",
-   "price": 1000,
-   "createdAt": 1724230291939
+   "id": "30",
+   "description": "임시 31번 상품 설명",
+   "imageURL": "https://picsum.photos/id/40/200/150",
+   "price": 21000,
+   "title": "임시 31번 상품",
+   "createdAt": "Mon Apr 29 2024 06:33:55 GMT+0900 (대한민국 표준시)"
   }
  }
 ]

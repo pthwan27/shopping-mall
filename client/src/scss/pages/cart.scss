@@ -1,0 +1,78 @@
+.cart-page {
+  .overview {
+    margin: 2rem 0;
+
+    text-align: center;
+
+    .title {
+    }
+
+    .desc {
+      font-size: 0.8rem;
+    }
+  }
+
+  .container {
+    width: 86%;
+    margin: 0 auto;
+    display: flex;
+
+    .cart-item-container {
+      flex: 0 0 50%;
+
+      .cart-item-list {
+        display: flex;
+        flex-direction: column;
+
+        list-style: none;
+
+        .cart-item {
+          margin-bottom: 2rem;
+
+          &__image {
+            height: 180px;
+            width: 180px;
+            object-fit: cover;
+            border-radius: 0.25rem;
+
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+          }
+          &__title {
+            font-family: "GmarketSansMedium";
+            font-size: 0.9rem;
+          }
+          &__price {
+            font-family: "GmarketSansLight";
+            font-size: 0.75rem;
+          }
+          &__amount {
+          }
+        }
+      }
+    }
+    .cart-willpay-container {
+      flex: 0 0 50%;
+
+      .cart-willpay {
+        &-item {
+          display: flex;
+          flex-direction: column;
+
+          li {
+            padding: 5px;
+            border: 1px solid black;
+          }
+
+          img {
+            width: 100px;
+            height: 75px;
+            object-fit: contain;
+          }
+        }
+        &-total {
+          padding: 5px;
+        }
+      }
+    }
+  }
+}

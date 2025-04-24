@@ -91,7 +91,7 @@ const CartList = ({ items }: { items: Cart[] }) => {
       >
         <label className="select-all-checkbox-container">
           <input className="select-all" name="select-all" type="checkbox" />
-          전체선택
+          <span>전체선택 / 전체해제</span>
         </label>
         <ul className="cart-item-list">
           {items.map((item: Cart, i: number) => (

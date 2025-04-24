@@ -1,12 +1,13 @@
 .cart-page {
   .container {
-    margin: 0 auto;
+    margin: 2rem auto;
+
     width: 86%;
 
     display: flex;
 
     .cart-item-container {
-      flex: 0 0 50%;
+      flex: 0 0 45%;
       margin: 0 auto;
 
       display: flex;
@@ -14,7 +15,16 @@
       justify-content: center;
 
       .select-all-checkbox-container {
+        display: flex;
+        justify-content: center;
+
+        padding-bottom: 0.25rem;
+
+        border-bottom: solid 1px var(--gray-color);
+
+        font-size: 0.9rem;
       }
+
       .cart-item-list {
         display: flex;
         flex-direction: column;
@@ -49,7 +59,8 @@
       }
     }
     .cart-willpay-container {
-      flex: 0 0 50%;
+      flex: 0 0 45%;
+      margin: 0 auto;
 
       display: flex;
       flex-direction: column;

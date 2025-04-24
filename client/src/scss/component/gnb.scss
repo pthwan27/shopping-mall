@@ -18,8 +18,26 @@
 
     gap: 2rem;
 
-    li {
+    a {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
       margin: auto 0;
+
+      color: var(--black-color);
+
+      svg {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    a:visited {
+      color: var(--black-color);
+    }
+    a:hover {
+      color: rgb(251, 118, 118);
     }
   }
 }

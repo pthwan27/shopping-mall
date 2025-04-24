@@ -1,25 +1,20 @@
 .cart-page {
-  .overview {
-    margin: 2rem 0;
-
-    text-align: center;
-
-    .title {
-    }
-
-    .desc {
-      font-size: 0.8rem;
-    }
-  }
-
   .container {
-    width: 86%;
     margin: 0 auto;
+    width: 86%;
+
     display: flex;
 
     .cart-item-container {
       flex: 0 0 50%;
+      margin: 0 auto;
 
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .select-all-checkbox-container {
+      }
       .cart-item-list {
         display: flex;
         flex-direction: column;
@@ -29,6 +24,9 @@
         .cart-item {
           margin-bottom: 2rem;
 
+          .desc {
+            display: flex;
+          }
           &__image {
             height: 180px;
             width: 180px;
@@ -52,6 +50,10 @@
     }
     .cart-willpay-container {
       flex: 0 0 50%;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
 
       .cart-willpay {
         &-item {

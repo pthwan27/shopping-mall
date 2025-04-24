@@ -2,18 +2,28 @@ import { useMutation } from "@tanstack/react-query";
 import { Cart } from "../../graphqlTypes";
 import { QueryKey, getClient, graphqlFetcher } from "../../queryClient";
 import { DELETE_CART, UPDATE_CART } from "../../graphql/cart";
-import { ForwardedRef, SyntheticEvent, forwardRef, useEffect, useState } from "react";
+import {
+  ForwardedRef,
+  SyntheticEvent,
+  forwardRef,
+  useEffect,
+  useState,
+} from "react";
 import ItemData from "./cartItemData";
 import { useRecoilState } from "recoil";
 import { checkedCartState } from "../../recoil/cart";
 
-const CartItem = ({ id, amount, product }: Cart, ref: ForwardedRef<HTMLInputElement>) => {
+const CartItem = (
+  { id, amount, product }: Cart,
+  ref: ForwardedRef<HTMLInputElement>
+) => {
   const [cartItemsAmount, setCartItemsAmount] = useState(amount);
 
   const queryClient = getClient();
 
   //recoil
-  const [checkedCartData, setCheckedCartData] = useRecoilState(checkedCartState);
+  const [checkedCartData, setCheckedCartData] =
+    useRecoilState(checkedCartState);
 
   const { mutate: updateCart } = useMutation<
     { updateCart: Cart[] },
@@ -27,15 +37,21 @@ const CartItem = ({ id, amount, product }: Cart, ref: ForwardedRef<HTMLInputElem
     onMutate: async ({ id, amount }) => {
       await queryClient.cancelQueries({ queryKey: [QueryKey.CART] });
 
-      const prevCart = queryClient.getQueryData<{ carts: Cart[] }>([QueryKey.CART]);
+      const prevCart = queryClient.getQueryData<{ carts: Cart[] }>([
+        QueryKey.CART,
+      ]);
 
       if (!prevCart) return;
 
-      const updateCartIdx = prevCart.carts.findIndex((item: Cart) => item.id == id);
+      const updateCartIdx = prevCart.carts.findIndex(
+        (item: Cart) => item.id == id
+      );
 
       if (updateCartIdx < 0) return prevCart;
 
-      const newCart = prevCart.carts.map((item) => (item.id === id ? { ...item, amount } : item));
+      const newCart = prevCart.carts.map((item) =>
+        item.id === id ? { ...item, amount } : item
+      );
 
       queryClient.setQueryData([QueryKey.CART], { carts: newCart });
 
@@ -50,13 +66,20 @@ const CartItem = ({ id, amount, product }: Cart, ref: ForwardedRef<HTMLInputElem
     },
   });
 
-  const { mutate: deleteCart } = useMutation<string, unknown, { id: string }, Cart[] | unknown>({
+  const { mutate: deleteCart } = useMutation<
+    string,
+    unknown,
+    { id: string },
+    Cart[] | unknown
+  >({
     mutationFn: ({ id }: { id: string }) => {
       return graphqlFetcher(DELETE_CART, { id });
     },
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: [QueryKey.CART] });
-      const prevCart = queryClient.getQueryData<{ carts: Cart[] }>([QueryKey.CART]);
+      const prevCart = queryClient.getQueryData<{ carts: Cart[] }>([
+        QueryKey.CART,
+      ]);
 
       if (!prevCart) return;
 
@@ -119,7 +142,11 @@ const CartItem = ({ id, amount, product }: Cart, ref: ForwardedRef<HTMLInputElem
         onChange={handleUpdateAmount}
         min={1}
       ></input>
-      <button className="cart-item__button" type="button" onClick={handleDeleteItem}>
+      <button
+        className="cart-item__button"
+        type="button"
+        onClick={handleDeleteItem}
+      >
         삭제
       </button>
     </li>

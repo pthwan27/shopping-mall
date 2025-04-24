@@ -1,7 +1,7 @@
 [
  {
   "id": "0",
-  "amount": 3,
+  "amount": 1,
   "product": {
    "id": "0",
    "description": "임시 1번 상품 설명",
@@ -24,15 +24,15 @@
   }
  },
  {
-  "id": "30",
+  "id": "2",
   "amount": 1,
   "product": {
-   "id": "30",
-   "description": "임시 31번 상품 설명",
-   "imageURL": "https://picsum.photos/id/40/200/150",
-   "price": 21000,
-   "title": "임시 31번 상품",
-   "createdAt": "Mon Apr 29 2024 06:33:55 GMT+0900 (대한민국 표준시)"
+   "id": "2",
+   "description": "임시 3번 상품 설명",
+   "imageURL": "https://picsum.photos/id/12/200/150",
+   "price": 18000,
+   "title": "임시 3번 상품",
+   "createdAt": "Wed Apr 17 2024 14:33:55 GMT+0900 (대한민국 표준시)"
   }
  }
 ]

@@ -9,7 +9,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import ItemData from "./cartItemData";
 import { useRecoilState } from "recoil";
 import { checkedCartState } from "../../recoil/cart";
 
@@ -115,6 +114,20 @@ const CartItem = (
     setCartItemsAmount(amount);
     updateCart({ id, amount });
   };
+  const handlePlusAmount = (e: SyntheticEvent) => {
+    e.preventDefault();
+    const amount = cartItemsAmount + 1;
+
+    setCartItemsAmount(amount);
+    updateCart({ id, amount });
+  };
+  const handleMinusAmount = (e: SyntheticEvent) => {
+    e.preventDefault();
+    const amount = cartItemsAmount - 1;
+
+    setCartItemsAmount(amount);
+    updateCart({ id, amount });
+  };
 
   const handleDeleteItem = () => {
     deleteCart({ id });
@@ -127,28 +140,50 @@ const CartItem = (
   };
   return (
     <li className="cart-item" key={id}>
-      <input
-        className="cart-item__checkbox"
-        type="checkbox"
-        name="select-item"
-        ref={ref}
-        data-id={id}
-      />
-      <ItemData {...product} />
-      <input
-        type="number"
-        className="cart-item__amount"
-        value={cartItemsAmount}
-        onChange={handleUpdateAmount}
-        min={1}
-      ></input>
-      <button
-        className="cart-item__button"
-        type="button"
-        onClick={handleDeleteItem}
-      >
-        삭제
-      </button>
+      <div className="cart-item-d1">
+        <input
+          className="cart-item__checkbox"
+          type="checkbox"
+          name="select-item"
+          ref={ref}
+          data-id={id}
+        />
+      </div>
+      <div className="cart-item-d2">
+        <img className="cart-item__image" src={product.imageURL}></img>
+      </div>
+
+      <div className="cart-item-d3">
+        <p className="cart-item__title">{product.title}</p>
+        <p className="cart-item__price">${product.price}</p>
+
+        <div className="cart-item__button_container">
+          <button className="cart-item__plus_button" onClick={handlePlusAmount}>
+            +
+          </button>
+          <input
+            type="number"
+            className="cart-item__amount"
+            value={cartItemsAmount}
+            onChange={handleUpdateAmount}
+            min={1}
+          />
+
+          <button
+            className="cart-item__minus_button"
+            onClick={handleMinusAmount}
+          >
+            -
+          </button>
+        </div>
+        <button
+          className="cart-item__button"
+          type="button"
+          onClick={handleDeleteItem}
+        >
+          ❌
+        </button>
+      </div>
     </li>
   );
 };

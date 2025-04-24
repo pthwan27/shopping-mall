@@ -69,14 +69,14 @@ const ProductItem = ({ id, title, price, imageURL }: Product) => {
     <li className="product-item">
       <Link to={`/products/${id}`}>
         <img className="product-item__image" src={imageURL}></img>
-        <p className="product-item__title">{title}</p>
-        <div className="product-item__buttons">
-          <span>${price}</span>
-          <button onClick={() => addCart(id)}>
-            <SvgPlus width="8" height="8" />
-          </button>
-        </div>
       </Link>
+      <p className="product-item__title">{title}</p>
+      <div className="product-item__buttons">
+        <span>${price}</span>
+        <button onClick={() => addCart(id)}>
+          <SvgPlus width="8" height="8" />
+        </button>
+      </div>
     </li>
   );
 };
